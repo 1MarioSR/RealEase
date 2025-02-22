@@ -9,7 +9,8 @@ namespace RealEase.Domain.Entities
         public string Name { get; set; }
         public string Lastname { get; set; }
 
-        public string address { get; set; }
+        public bool IsActive { get; set; }
+        public string Address { get; set; }
 
 
     }

@@ -1,0 +1,126 @@
+﻿   @model UsersViewModel
+
+@{
+    ViewData["Title"] = "User List";
+
+
+}
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">All Users</h2>
+    <a class="btn btn-primary" asp-action="Create">
+        <i class="bi bi-plus-circle"></i> Create New
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="text-secondary">All Users</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>Is Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.AllUsers != null && Model.AllUsers.Any())
+                {
+                    @foreach (var User in Model.AllUsers)
+                    {
+                        <tr>
+                            <td>@User.Id</td>
+                            <td>@User.Name</td>
+                            <td>@User.Lastname</td>
+                            <td>@User.Address</td>
+                            <td>
+                                @if (User.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@User.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@User.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@User.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No Users found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-5">
+    <div class="card-body">
+        <h4 class="text-secondary">Active Users</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>Is Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ActiveUsers != null && Model.ActiveUsers.Any())
+                {
+                    @foreach (var User in Model.ActiveUsers)
+                    {
+                        <tr>
+                            <td>@User.Id</td>
+                            <td>@User.Name</td>
+                            <td>@User.Lastname</td>
+                            <td>@User.Address</td>
+                            <td>
+                                <span class="badge bg-success">Active</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@User.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@User.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@User.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No active Users found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
