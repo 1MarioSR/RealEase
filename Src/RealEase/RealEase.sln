@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Web", "RealEase.Web\RealEase.Web.csproj", "{2DA89BA8-8CAD-4F21-8DEC-E3FEDB49D6A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.API", "RealEase.API\RealEase.API.csproj", "{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2DA89BA8-8CAD-4F21-8DEC-E3FEDB49D6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DA89BA8-8CAD-4F21-8DEC-E3FEDB49D6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DA89BA8-8CAD-4F21-8DEC-E3FEDB49D6A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
