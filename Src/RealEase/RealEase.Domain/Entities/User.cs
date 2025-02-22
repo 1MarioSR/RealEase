@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RealEase.Web.Models.Entities
+namespace RealEase.Domain.Entities
 {
     public class User
     {

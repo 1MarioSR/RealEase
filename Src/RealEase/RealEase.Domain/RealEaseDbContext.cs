@@ -1,5 +1,6 @@
-﻿using RealEase.Web.Models.Entities;
+﻿
 using Microsoft.EntityFrameworkCore;
+using RealEase.Domain.Entities;
 
 namespace RealEase.Web.Data
 {

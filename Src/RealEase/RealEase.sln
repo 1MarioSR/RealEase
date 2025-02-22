@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Web", "RealEase.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.API", "RealEase.API\RealEase.API.csproj", "{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Domain", "RealEase.Domain\RealEase.Domain.csproj", "{77E1827C-3F8E-4447-B8DC-D206DFD36207}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB08C878-1CCE-4ECF-AEE6-6D58843FFDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

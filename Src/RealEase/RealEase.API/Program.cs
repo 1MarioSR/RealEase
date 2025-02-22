@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using RealEase.Web.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<RealEaseDbContext>(p =>
+    p.UseSqlServer(builder.Configuration.GetConnectionString("RealEaseStrConnection"))); 
 
 // Add services to the container.
 
@@ -23,3 +29,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
