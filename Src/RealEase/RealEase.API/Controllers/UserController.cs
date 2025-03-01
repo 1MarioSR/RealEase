@@ -12,16 +12,16 @@ namespace RealEase.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController: ControllerBase
+    public class PropertieController: ControllerBase
     {
         private readonly RealEaseDbContext _context;
 
-        public UserController(RealEaseDbContext context)
+        public PropertieController(RealEaseDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet("GetPropertie")]
+        [HttpGet(nameof(GetPropertie))]
         public async Task<ActionResult<List<Propertie>>> GetPropertie()
         {
             return await _context.Properties.ToListAsync();
