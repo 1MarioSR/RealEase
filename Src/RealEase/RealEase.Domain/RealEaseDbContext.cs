@@ -1,8 +1,7 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RealEase.Domain.Entities;
 
-namespace RealEase.Web.Data
+namespace RealEase.Domain
 {
     public class RealEaseDbContext : DbContext
     {
@@ -16,7 +15,8 @@ namespace RealEase.Web.Data
 
         public DbSet<User> Users { get; set; }
 
-        
+        public DbSet<Propertie> Properties { get; set; }
+
     }
 
 }

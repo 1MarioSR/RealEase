@@ -1,4 +1,4 @@
-﻿using RealEase.Web.Data;
+﻿using RealEase.Domain;
 using RealEase.Web.Models;
 using RealEase.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

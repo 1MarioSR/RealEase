@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using RealEase.Web.Data;
+using RealEase.Domain;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
