@@ -4,47 +4,47 @@ using RealEase.API.Requests;
 using RealEase.API.Responses;
 using RealEase.Domain;
 using RealEase.Domain.Entities;
-using static RealEase.API.Requests.NewPropertieRequest;
-using Propertie = RealEase.Domain.Entities.Propertie;
+using static RealEase.API.Requests.NewUserRequest;
+using User = RealEase.Domain.Entities.User;
 
 
 namespace RealEase.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PropertieController: ControllerBase
+    public class UserController: ControllerBase
     {
         private readonly RealEaseDbContext _context;
 
-        public PropertieController(RealEaseDbContext context)
+        public UserController(RealEaseDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet(nameof(GetPropertie))]
-        public async Task<ActionResult<List<Propertie>>> GetPropertie()
+        [HttpGet(nameof(GetUser))]
+        public async Task<ActionResult<List<User>>> GetUser()
         {
-            return await _context.Properties.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
-        [HttpPost("AddPropertie")]
-        public async Task<ActionResult<NewPropertieResponse>> AddPropertie(NewPropertieRequest request)
+        [HttpPost("AddUser")]
+        public async Task<ActionResult<NewUserResponse>> AddUser(NewUserRequest request)
         {
-            var propertieDb = new Propertie();
+            var UserDb = new User();
             
-            propertieDb.Title = request.Title;
-            propertieDb.Description = request.Description;
-            propertieDb.Address = request.Address;
-            propertieDb.Price = request.Price;
+            UserDb.Name = request.Name;
+            UserDb.Lastname = request.Lastname;
+            UserDb.IsActive = request.IsActive;
+            UserDb.Address = request.Address;
        
-            _context.Properties.Add(propertieDb);
+            _context.Users.Add(UserDb);
             await _context.SaveChangesAsync();
 
-            return new NewPropertieResponse { Id = propertieDb.Id };
+            return new NewUserResponse { Id = UserDb.Id };
 
-            //var response = new NewPropertieResponse { Id = propertieDb.Id };
+            //var response = new NewUserResponse { Id = UserDb.Id };
             //return response;
-            //return propertieDb.Id;
+            //return UserDb.Id;
         }
     }
 }

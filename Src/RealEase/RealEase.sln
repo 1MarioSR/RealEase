@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.API", "RealEase.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Domain", "RealEase.Domain\RealEase.Domain.csproj", "{77E1827C-3F8E-4447-B8DC-D206DFD36207}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Application", "RealEase.Application\RealEase.Application.csproj", "{A41043BD-F4DF-4CE0-BAA3-F81E98B1F2C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEase.Infrastructure", "RealEase.Infraestructure\RealEase.Infrastructure.csproj", "{4D0CF7BF-AFCA-4275-BB2A-9C70D0D8103F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77E1827C-3F8E-4447-B8DC-D206DFD36207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41043BD-F4DF-4CE0-BAA3-F81E98B1F2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41043BD-F4DF-4CE0-BAA3-F81E98B1F2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41043BD-F4DF-4CE0-BAA3-F81E98B1F2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41043BD-F4DF-4CE0-BAA3-F81E98B1F2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D0CF7BF-AFCA-4275-BB2A-9C70D0D8103F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D0CF7BF-AFCA-4275-BB2A-9C70D0D8103F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D0CF7BF-AFCA-4275-BB2A-9C70D0D8103F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D0CF7BF-AFCA-4275-BB2A-9C70D0D8103F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

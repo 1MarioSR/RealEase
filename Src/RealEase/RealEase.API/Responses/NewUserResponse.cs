@@ -1,6 +1,6 @@
 ﻿namespace RealEase.API.Responses
 {
-    public class NewPropertieResponse
+    public class NewUserResponse
     {
         public int Id { get; set; }
         
