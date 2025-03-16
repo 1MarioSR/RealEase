@@ -32,19 +32,42 @@
                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
                 </label>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</div>
+<button id="addUserButton" class="btn btn-primary">
+    Save
+</button>
+<a href="/Users" class="btn btn-secondary"> Cancel</a>
+    
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script>
+        $(document).ready(function () {
+            $('#addUserButton').click(function (e) {
+                e.preventDefault();
+                var newUser = {
+                     Name: $('#nameInput').val(),
+                    Lastname: $('#lastnameInput').val(),
+                    IsActive: $('#IsActiveInput').val(),
+                    Address: $('#addressInput').val()
+                };
+                $.ajax({
+                    url: 'https://localhost:7012/User/AddUser',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(newUser),
+                    success: function (data) {
+                        alert('User added successfully with ID: ' + data.id);
+                        window.location.href = 'Index';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
 }

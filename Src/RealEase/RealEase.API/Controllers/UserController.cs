@@ -24,8 +24,8 @@ namespace RealEase.API.Controllers
             _context = context;
         }
 
-        [HttpGet(nameof(GetUser))]
-        public async Task<ActionResult<List<User>>> GetUser()
+        [HttpGet(nameof(GetUsers))]
+        public async Task<ActionResult<List<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
