@@ -1,8 +1,10 @@
-﻿using RealEase.Domain;
-using RealEase.Web.Models;
+﻿using RealEase.Web.Models;
 using RealEase.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RealEase.Domain;
+
+
 namespace RealEase.Web.Controllers
 {
     public class UsersController : Controller

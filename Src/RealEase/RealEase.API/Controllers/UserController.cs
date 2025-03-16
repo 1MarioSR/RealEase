@@ -9,6 +9,7 @@ using static RealEase.API.Requests.NewUserRequest;
 using User = RealEase.Domain.Entities.User;
 
 
+
 namespace RealEase.API.Controllers
 {
     [ApiController]

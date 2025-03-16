@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RealEase.API\RealEase.API.csproj" />
     <ProjectReference Include="..\RealEase.Domain\RealEase.Domain.csproj" />
+    <ProjectReference Include="..\RealEase.Persistence\RealEase.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
