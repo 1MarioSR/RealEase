@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RealEase.Domain\RealEase.Domain.csproj" />
     <ProjectReference Include="..\RealEase.Persistence\RealEase.Persistence.csproj" />
   </ItemGroup>

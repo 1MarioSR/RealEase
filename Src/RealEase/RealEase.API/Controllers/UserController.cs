@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RealEase.API.Dtos;
 using RealEase.API.Requests;
 using RealEase.API.Responses;
 using RealEase.Domain;
@@ -28,6 +29,29 @@ namespace RealEase.API.Controllers
         {
             return await _context.Users.ToListAsync();
         }
+
+        [HttpGet("GetUser/{Id}")]
+        public async Task<ActionResult<UserDto>> GetUser(int Id)
+        {
+            var UserDb = await _context.Users.FindAsync(Id);
+
+            if (UserDb == null)
+            {
+                return NotFound();
+            }
+
+            var UserDto = new UserDto
+            {
+                Id = UserDb.Id,
+                Name = UserDb.Name,
+                Lastname = UserDb.Lastname,
+                IsActive = UserDb.IsActive,
+                Address = UserDb.Address
+            };
+
+            return Ok(UserDto);
+        }
+
 
         [HttpPost("AddUser")]
         public async Task<ActionResult<NewUserResponse>> AddUser(NewUserRequest request)
