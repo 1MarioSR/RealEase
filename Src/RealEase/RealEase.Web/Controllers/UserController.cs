@@ -1,8 +1,8 @@
 ﻿using RealEase.Web.Models;
-using RealEase.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RealEase.Domain;
+using RealEase.Persistence.Context;
+using RealEase.Domain.Entities;
 
 
 namespace RealEase.Web.Controllers

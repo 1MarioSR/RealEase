@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEase.Domain.Entities;
 
-namespace RealEase.Domain
+namespace RealEase.Persistence.Context
 {
     public class RealEaseDbContext : DbContext
     {
@@ -17,6 +17,11 @@ namespace RealEase.Domain
 
         public DbSet<Propertie> Properties { get; set; }
 
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Contract> Contracts { get; set; }
+
+        public DbSet<Payment> Payments { get; set; }
     }
 
 }

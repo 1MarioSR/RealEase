@@ -1,5 +1,5 @@
-using RealEase.Domain;
 using Microsoft.EntityFrameworkCore;
+using RealEase.Persistence.Context;
 
 
 var builder = WebApplication.CreateBuilder(args);
