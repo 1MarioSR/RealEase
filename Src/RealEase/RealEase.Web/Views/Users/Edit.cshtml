@@ -14,16 +14,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" id="id" value="@Model.Id" />
             <div class="form-group">
-                <label for="nameInput">Name</label>
-                <input class="form-control" id="nameInput" value="@Model.Name" />
+                <label for="firstNameInput">FirstName</label>
+                <input class="form-control" id="firstNameInput" value="@Model.FirstName" />
             </div>
             <div class="form-group">
-                <label for="lastnameInput">Lastname</label>
-                <input class="form-control" id="lastnameInput" value="@Model.Lastname" />
+                <label for="lastNameInput">LastName</label>
+                <input class="form-control" id="lastNameInput" value="@Model.LastName" />
             </div> 
             <div class="form-group ">
-                <label for="addressInput">Address</label>
-                <input class="form-control" id="addressInput" value="@Model.Address" />
+                <label for="emailInput">Email</label>
+                <input class="form-control" id="emailInput" value="@Model.Email" />
+            </div>
+            <div class="form-group ">
+                <label for="phoneNumberInput">PhoneNumber</label>
+                <input class="form-control" id="phoneNumberInput" value="@Model.PhoneNumber" />
+            </div>
+            <div class="form-group ">
+                <label for="passwordHashInput">PasswordHash</label>
+                <input class="form-control" id="passwordHashInput" value="@Model.PasswordHash" />
+            </div>
+            <div class="form-group ">
+                <label for="roleInput">Role</label>
+                <input class="form-control" id="roleInput" value="@Model.Role" />
             </div>
            <div class="form-group form-check">
             <label class="form-check-label" for="isActiveInput">Is Active</label>
@@ -50,10 +62,14 @@
                 // var UserId = url.substring(url.lastIndexOf('/') + 1);
                 //const UserId = url.split('/').pop();
                 var updatedUser = {
-                    Name: $('#nameInput').val(),
-                    Lastname: $('#lastnameInput').val(),
-                    IsActive: $('#isActiveInput').prop('checked'),
-                    Address: $('#addressInput').val()
+                    FirstName: $('#firstNameInput').val(),
+                    LastName: $('#lastNameInput').val(),
+                    Email: $('#emailInput').val(),
+                    PhoneNumber: $('#phoneNumberInput').val(),
+                    PasswordHash: $('#passwordHashInput').val(),
+                    Role: $('#roleInput').val(),
+                    IsActive: $('#isActiveInput').prop('checked')
+                    
                 };
 
                 $.ajax({

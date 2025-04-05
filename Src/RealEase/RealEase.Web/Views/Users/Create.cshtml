@@ -15,10 +15,10 @@
             
             <div class="row">
                 <div class="col-md-2">
-                    <label class="form-label col-md-5"> Name</label>
+                    <label class="form-label col-md-5"> FirstName</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" id="nameInput" />
+                    <input class="form-control" id="firstNameInput" />
                 </div>
             </div>
             
@@ -27,16 +27,43 @@
                     <label class="form-label col-md-5"> LastName</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" id="lastnameInput" />
+                    <input class="form-control" id="lastNameInput" />
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-2">
-                    <label class="form-label col-md-5"> Address</label>
+                    <label class="form-label col-md-5"> Email</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" id="addressInput" />
+                    <input class="form-control" id="emailInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PhoneNumber</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="phoneNumberInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PasswordHash</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="passwordHashInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Role</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="roleInput" />
                 </div>
             </div>
 
@@ -67,10 +94,13 @@
             $('#addUserButton').click(function (e) {
                 e.preventDefault();
                 var newUser = {
-                    Name: $('#nameInput').val(),
-                    Lastname: $('#lastnameInput').val(),
-                    IsActive: $('#isActiveInput').prop('checked'),
-                    Address: $('#addressInput').val()
+                    FirstName: $('#firstNameInput').val(),
+                    LastName: $('#lastNameInput').val(),
+                    Email: $('#emailInput').val(),
+                    PhoneNumber: $('#phoneNumberInput').val(),
+                    PasswordHash: $('#passwordHashInput').val(),
+                    Role: $('#roleInput').val(),
+                    IsActive: $('#isActiveInput').prop('checked')
                 };
                 $.ajax({
                     url: 'https://localhost:7012/User/AddUser',

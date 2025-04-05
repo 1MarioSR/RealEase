@@ -20,15 +20,18 @@
             <thead class="table-dark">
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Lastname</th>
-                    <th>Address</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>PhoneNumber</th>
+                    <th>PasswordHash</th>
+                    <th>Role</th>
                     <th>Is Active</th>
                     <th>Actions</th>
                 </tr>
             <tbody id="UsersTableBody">
                 <tr>
-                    <td colspan="6">No Records found</td>
+                    <td colspan="9">No Records found</td>
                 </tr>
             </tbody>
                 @* @if (Model.AllUsers != null && Model.AllUsers.Any())
@@ -176,10 +179,13 @@
                         $.each(data, function (index, user) {
                             tableBody += '<tr>' +
                                 '<td>' + user.id + '</td>' +
-                                '<td>' + user.name + '</td>' +
-                                '<td>' + user.lastname + '</td>' +
-                                '<td>' + user.isActive + '</td>' +
-                                '<td>' + user.address + '</td>' +
+                                '<td>' + user.firstName + '</td>' +
+                                '<td>' + user.lastName + '</td>' +
+                                '<td>' + user.email + '</td>' +
+                                '<td>' + user.phoneNumber + '</td>' +
+                                '<td>' + user.passwordHash + '</td>' +
+                                '<td>' + user.role + '</td>' +
+                                '<td>' + user.isActive + 
                                 '<td>' +
                                 '<a class="btn btn-warning edit-User" data-id="' + user.id + '">Edit</a> ' +
                                 '<button class="btn btn-danger delete-User" data-id="' + user.id + '">Delete</button>' +

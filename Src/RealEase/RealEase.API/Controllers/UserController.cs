@@ -42,10 +42,13 @@ namespace RealEase.API.Controllers
             var UserDto = new UserDto
             {
                 Id = UserDb.Id,
-                Name = UserDb.Name,
-                Lastname = UserDb.Lastname,
-                IsActive = UserDb.IsActive,
-                Address = UserDb.Address
+                FirstName = UserDb.FirstName,
+                LastName = UserDb.LastName,
+                Email = UserDb.Email,
+                PhoneNumber = UserDb.PhoneNumber,
+                PasswordHash = UserDb.PasswordHash,
+                Role = UserDb.Role,
+                IsActive = UserDb.IsActive
             };
 
             return Ok(UserDto);
@@ -57,11 +60,14 @@ namespace RealEase.API.Controllers
         {
             var UserDb = new User();
             
-            UserDb.Name = request.Name;
-            UserDb.Lastname = request.Lastname;
+            UserDb.FirstName = request.FirstName;
+            UserDb.LastName = request.LastName;
+            UserDb.Email = request.Email;
+            UserDb.PhoneNumber = request.PhoneNumber;
+            UserDb.PasswordHash = request.PasswordHash;
+            UserDb.Role = request.Role;
             UserDb.IsActive = request.IsActive;
-            UserDb.Address = request.Address;
-       
+
             _context.Users.Add(UserDb);
             await _context.SaveChangesAsync();
 
@@ -82,10 +88,13 @@ namespace RealEase.API.Controllers
                 return NotFound();
             }
 
-            UserDb.Name = request.Name;
-            UserDb.Lastname = request.Lastname;
+            UserDb.FirstName = request.FirstName;
+            UserDb.LastName = request.LastName;
+            UserDb.Email = request.Email;
+            UserDb.PhoneNumber = request.PhoneNumber;
+            UserDb.PasswordHash = request.PasswordHash;
+            UserDb.Role = request.Role;
             UserDb.IsActive = request.IsActive;
-            UserDb.Address = request.Address;
 
             _context.Users.Update(UserDb);
             await _context.SaveChangesAsync();
