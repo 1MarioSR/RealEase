@@ -1,0 +1,123 @@
+﻿@using RealEase.Domain.Entities
+@model Propertie
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Propertie</h1>
+
+<h4>Propertie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Title</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="titleInput" />
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Description</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="descriptionInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Address</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="addressInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Price</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="priceInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PropertyType</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="propertyTypeInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Status</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="statusInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> OwnerId</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" step="1" class="form-control" id="ownerIdInput" />
+                </div>
+            </div>
+
+
+            
+
+        </form>
+    </div>
+</div>
+
+<button id="addPropertieButton" class="btn btn-primary">
+    Save
+</button>
+<a href="/Properties" class="btn btn-secondary"> Cancel</a>
+    
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#addPropertieButton').click(function (e) {
+                e.preventDefault();
+                var newPropertie = {
+                    Title: $('#titleInput').val(),
+                    Description: $('#descriptionInput').val(),
+                    Address: $('#addressInput').val(),
+                    Price: $('#priceInput').val(),
+                    PropertyType: $('#propertyTypeInput').val(),
+                    Status: $('#statusInput').val(),
+                    OwnerId: $('#ownerIdInput').val()
+                };
+                $.ajax({
+                    url: 'https://localhost:7012/Propertie/AddPropertie',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(newPropertie),
+                    success: function (data) {
+                        alert('Propertie added successfully with ID: ' + data.id);
+                        window.location.href = 'Index';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+}

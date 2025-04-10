@@ -1,0 +1,95 @@
+﻿@using RealEase.Domain.Entities
+@model Propertie
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="id" value="@Model.Id" />
+            <div class="form-group">
+                <label for="titleInput">Title</label>
+                <input class="form-control" id="titleInput" value="@Model.Title" />
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Description</label>
+                <input class="form-control" id="descriptionInput" value="@Model.Description" />
+            </div> 
+            <div class="form-group ">
+                <label for="addressInput">Address</label>
+                <input class="form-control" id="addressInput" value="@Model.Address" />
+            </div>
+            <div class="form-group ">
+                <label for="priceInput">Price</label>
+                <input class="form-control" id="priceInput" value="@Model.Price" />
+            </div>
+            <div class="form-group ">
+                <label for="propertyTypeInput">PropertyType</label>
+                <input class="form-control" id="propertyTypeInput" value="@Model.PropertyType" />
+            </div>
+            <div class="form-group ">
+                <label for="statusInput">Status</label>
+                <input class="form-control" id="statusInput" value="@Model.Status" />
+            </div>
+            <div class="form-group">
+                <label for="ownerIdInput">OwnerId</label>
+                <input type="number" step="1" class="form-control" id="ownerIdInput" name="Owner_id" value="@Model.OwnerId" />
+            </div>
+
+          
+            <button type="button" id="UpdatePropertieButton" class="btn btn-primary">Save</button>
+            <a href="/Properties" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#UpdatePropertieButton').click(function (e) {
+                e.preventDefault();
+                 var PropertieId = $('#id').val();
+                // var url = window.location.pathname;
+                // var PropertieId = url.substring(url.lastIndexOf('/') + 1);
+                //const PropertieId = url.split('/').pop();
+                var updatedPropertie = {
+                    Title: $('#titleInput').val(),
+                    Description: $('#descriptionInput').val(),
+                    Address: $('#addressInput').val(),
+                    Price: $('#priceInput').val(),
+                    PropertyType: $('#propertyTypeInput').val(),
+                    Status: $('#statusInput').val(),
+                    OwnerId: $('#ownerIdInput').val()
+                    
+                };
+
+                $.ajax({
+                    url: 'https://localhost:7012/Propertie/UpdatePropertie/' + PropertieId,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedPropertie),
+                    success: function () {
+                        alert('Propertie updated successfully');
+                        window.location.href = '/Properties';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+

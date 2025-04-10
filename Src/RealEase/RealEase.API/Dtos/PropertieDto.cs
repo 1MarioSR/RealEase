@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RealEase.Domain.Entities
+namespace RealEase.API.Dtos
 {
-    public class Propertie
-    { 
-            [Key]
+    public class PropertieDto
+    {
             public int Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
@@ -18,6 +12,7 @@ namespace RealEase.Domain.Entities
             public string PropertyType { get; set; }
             public string Status { get; set; }
             public int OwnerId { get; set; }
-
     }
+
 }
+

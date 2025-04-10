@@ -1,0 +1,208 @@
+﻿   @model PropertiesViewModel
+
+@{
+    ViewData["Title"] = "Propertie List";
+
+
+}
+
+
+
+    <h2 class="text-primary">All Properties</h2>
+    <a class="btn btn-primary" id="addPropertieButton" > Add </a>
+        
+   
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="text-secondary">All Properties</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Address</th>
+                    <th>Price</th>
+                    <th>PropertyType</th>
+                    <th>Status</th>
+                    <th>OwnerId</th>
+                    <th>Actions</th>
+                </tr>
+            <tbody id="PropertiesTableBody">
+                <tr>
+                    <td colspan="9">No Records found</td>
+                </tr>
+            </tbody>
+                @* @if (Model.AllProperties != null && Model.AllProperties.Any())
+                {
+                    @foreach (var Propertie in Model.AllProperties)
+                    {
+                        <tr>
+                            <td>@Propertie.Id</td>
+                            <td>@Propertie.Name</td>
+                            <td>@Propertie.Lastname</td>
+                            <td>@Propertie.Address</td>
+                            <td>
+                                @if (Propertie.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No Properties found.</td>
+                    </tr>
+                }
+            </tbody>*@      
+            </table>
+    </div>
+</div> 
+
+
+@* <div class="card shadow-sm mt-5">
+    <div class="card-body">
+        <h4 class="text-secondary">Active Properties</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>Is Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ActiveProperties != null && Model.ActiveProperties.Any())
+                {
+                    @foreach (var Propertie in Model.ActiveProperties)
+                    {
+                        <tr>
+                            <td>@Propertie.Id</td>
+                            <td>@Propertie.Name</td>
+                            <td>@Propertie.Lastname</td>
+                            <td>@Propertie.Address</td>
+                            <td>
+                                <span class="badge bg-success">Active</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Propertie.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No active Properties found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
+ </table> *@
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            loadProperties();
+
+            $('#addPropertieButton').click(function () {
+                window.location.href = 'https://localhost:7146/Properties/Create';
+            });
+
+            $(document).on('click', '.delete-Propertie', function () {
+                var PropertieId = $(this).data('id');
+                if (confirm('Are you sure you want to delete this Propertie?')) {
+                    $.ajax({
+                        url: 'https://localhost:7012/Propertie/DeletePropertie/' + PropertieId,
+                        type: 'DELETE',
+                        success: function () {
+                            alert('Propertie deleted successfully');
+                            loadProperties();
+                        },
+                        error: function (error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '.edit-Propertie', function () {
+                var PropertieId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Properties/Edit/' + PropertieId;
+            });
+
+        });
+
+        function loadProperties() {
+            $.ajax({
+                url: 'https://localhost:7012/Propertie/GetProperties',
+                type: 'GET',
+                success: function (data) {
+                    var tableBody = '';
+                    if (data.length === 0) {
+                        tableBody = '<tr><td colspan="6">No Records found</td></tr>';
+                    } else {
+                        $.each(data, function (index, Propertie) {
+                            tableBody += '<tr>' +
+                                '<td>' + Propertie.id + '</td>' +
+                                '<td>' + Propertie.title + '</td>' +
+                                '<td>' + Propertie.description + '</td>' +
+                                '<td>' + Propertie.address + '</td>' +
+                                '<td>' + Propertie.price + '</td>' +
+                                '<td>' + Propertie.propertyType + '</td>' +
+                                '<td>' + Propertie.status + '</td>' +
+                                '<td>' + Propertie.ownerId +
+                                '<td>' +
+                                '<a class="btn btn-warning edit-Propertie" data-id="' + Propertie.id + '">Edit</a> ' +
+                                '<button class="btn btn-danger delete-Propertie" data-id="' + Propertie.id + '">Delete</button>' +
+                                '</td>' +
+                                '</tr>';
+                        });
+                    }
+                    $('#PropertiesTableBody').html(tableBody);
+                     
+
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+    </script>
+
+}
