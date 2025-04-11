@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEase.Domain.Entities
+﻿namespace RealEase.API.Requests
 {
-    public class Contract
+    public class NewContractRequest
     {
-        [Key]
-        public int Id { get; set; }
         public int ClientId { get; set; }
         public int AgentId { get; set; }
         public int PropertyId { get; set; }
