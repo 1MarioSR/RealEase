@@ -36,16 +36,21 @@
                     <label class="form-label col-md-5"> VisitDate</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" id="visitDateInput" />
+                    <input type="date" class="form-control" id="visitDateInput" />
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-2">
-                    <label class="form-label col-md-5"> Status</label>
+                    <label class="form-label"> Status</label>
                 </div>
                 <div class="col-md-6">
-                    <input class="form-control" id="statusInput" />
+                    <input class="form-control" id="statusInput" list="status" placeholder="Ej. Disponible" />
+                    <datalist id="status">
+                        <option value="Pendiente" />
+                        <option value="Disponible" />
+                        <option value="Vendido" />
+                    </datalist>
                 </div>
             </div>
 

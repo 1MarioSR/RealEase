@@ -41,7 +41,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label class="form-label col-md-5"> PhoneNumber</label>
                 </div>
                 <div class="col-md-6">
@@ -50,7 +50,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label class="form-label col-md-5"> PasswordHash</label>
                 </div>
                 <div class="col-md-6">
@@ -58,14 +58,20 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Role</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="roleInput" />
-                </div>
-            </div>
+           <div class="row mb-3">
+               <div class="col-md-2">
+            <label for="roleInput" class="form-label">Role</label>
+                 </div>
+             <div class="col-md-6">
+                 <input class="form-control" id="roleInput" list="roles" placeholder="Ej. Administrador" />
+                    <datalist id="roles">
+                        <option value="Administrador" />
+                        <option value="Agente de ventas" />
+                        <option value="Dueño" />
+                        <option value="Cliente" />
+                    </datalist>
+             </div>
+           </div>
 
             <div class="check">
                 <div class="col-md-2">

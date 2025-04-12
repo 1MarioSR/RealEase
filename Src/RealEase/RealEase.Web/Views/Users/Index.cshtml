@@ -185,7 +185,7 @@
                                 '<td>' + user.phoneNumber + '</td>' +
                                 '<td>' + user.passwordHash + '</td>' +
                                 '<td>' + user.role + '</td>' +
-                                '<td>' + user.isActive + 
+                                '<td>' + (user.isActive ? 'Activo' : 'No activo') + 
                                 '<td>' +
                                 '<a class="btn btn-warning edit-User" data-id="' + user.id + '">Edit</a> ' +
                                 '<button class="btn btn-danger delete-User" data-id="' + user.id + '">Delete</button>' +
