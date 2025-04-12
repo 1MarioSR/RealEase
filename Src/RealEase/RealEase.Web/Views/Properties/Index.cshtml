@@ -21,6 +21,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
+                    <th>Image</th>
                     <th>Description</th>
                     <th>Address</th>
                     <th>Price</th>
@@ -31,7 +32,7 @@
                 </tr>
             <tbody id="PropertiesTableBody">
                 <tr>
-                    <td colspan="9">No Records found</td>
+                    <td colspan="10">No Records found</td>
                 </tr>
             </tbody>
                 @* @if (Model.AllProperties != null && Model.AllProperties.Any())
@@ -174,12 +175,13 @@
                 success: function (data) {
                     var tableBody = '';
                     if (data.length === 0) {
-                        tableBody = '<tr><td colspan="9">No Records found</td></tr>';
+                        tableBody = '<tr><td colspan="10">No Records found</td></tr>';
                     } else {
                         $.each(data, function (index, Propertie) {
                             tableBody += '<tr>' +
                                 '<td>' + Propertie.id + '</td>' +
                                 '<td>' + Propertie.title + '</td>' +
+                                '<td><img src="' + Propertie.image + '" alt="Property Image" width="100"></td>'+
                                 '<td>' + Propertie.description + '</td>' +
                                 '<td>' + Propertie.address + '</td>' +
                                 '<td>' + Propertie.price + '</td>' +

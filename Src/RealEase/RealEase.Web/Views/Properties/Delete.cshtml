@@ -19,6 +19,12 @@
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class="col-sm-10">
@@ -54,7 +60,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OwnerId)
         </dd>
-
+    </dl>
 
         <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

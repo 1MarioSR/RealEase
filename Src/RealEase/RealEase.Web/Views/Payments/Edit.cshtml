@@ -1,0 +1,96 @@
+﻿@using RealEase.Domain.Entities
+@model Payment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="id" value="@Model.Id" />
+            <div class="form-group">
+                <label for="contractIdInput">ContractId</label>
+                <input type="number" step="1" class="form-control" id="contractIdInput" value="@Model.ContractId" />
+            </div>
+            <div class="form-group">
+                <label for="tenantIdInput">TenantId</label>
+                <input type="number" step="1" class="form-control" id="tenantIdInput" value="@Model.TenantId" />
+            </div>
+            <div class="form-group ">
+                <label for="paymentDateInput">PaymentDate</label>
+                <input type="date" class="form-control" id="paymentDateInput" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="form-group ">
+                <label for="amountInput">Amount</label>
+                <input class="form-control" id="amountInput" value="@Model.Amount" />
+            </div>
+
+            <div class="form-group ">
+                <label for="paymentMethodInput">PaymentMethod</label>
+                <input class="form-control" id="paymentMethodInput" value="@Model.PaymentMethod" />
+            </div>
+
+
+            <div class="form-group ">
+                <label for="statusInput">Status</label>
+                <input class="form-control" id="statusInput" value="@Model.Status" />
+            </div>
+
+
+
+            <button type="button" id="UpdatePaymentButton" class="btn btn-primary">Save</button>
+            <a href="/Payments" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#UpdatePaymentButton').click(function (e) {
+                e.preventDefault();
+                 var PaymentId = $('#id').val();
+                // var url = window.location.pathname;
+                // var PaymentId = url.substring(url.lastIndexOf('/') + 1);
+                //const PaymentId = url.split('/').pop();
+                var updatedPayment = {
+                    ContractId: $('#contractIdInput').val(),
+                    TenantId: $('#tenantIdInput').val(),
+                    PaymentDate: $('#paymentDateInput').val(),
+                    Amount: $('#amountInput').val(),
+                    PaymentMethod: $('#paymentMethodInput').val(),
+                    Status: $('#statusInput').val()
+
+                };
+
+                $.ajax({
+                    url: 'https://localhost:7012/Payment/UpdatePayment/' + PaymentId,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedPayment),
+                    success: function () {
+                        alert('Payment updated successfully');
+                        window.location.href = '/Payments';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+

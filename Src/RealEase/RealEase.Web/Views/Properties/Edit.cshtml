@@ -17,6 +17,12 @@
                 <label for="titleInput">Title</label>
                 <input class="form-control" id="titleInput" value="@Model.Title" />
             </div>
+
+            <div class="form-group">
+                <label for="imageInput">Image</label>
+                <input type= "url"class="form-control" id="imageInput" value="@Model.Image" />
+            </div>
+
             <div class="form-group">
                 <label for="descriptionInput">Description</label>
                 <input class="form-control" id="descriptionInput" value="@Model.Description" />
@@ -64,6 +70,7 @@
                 //const PropertieId = url.split('/').pop();
                 var updatedPropertie = {
                     Title: $('#titleInput').val(),
+                    Image: $('#imageInput').val(),
                     Description: $('#descriptionInput').val(),
                     Address: $('#addressInput').val(),
                     Price: $('#priceInput').val(),

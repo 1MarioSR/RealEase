@@ -1,0 +1,115 @@
+﻿@using RealEase.Domain.Entities
+@model Payment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Payment</h1>
+
+<h4>Payment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> ContractId</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" step="1" class="form-control" id="contractIdInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> TenantId</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" step="1" class="form-control" id="tenantIdInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PaymentDate</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="date" class="form-control" id="paymentDateInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Amount</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="amountInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PaymentMethod</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="paymentMethodInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Status</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="statusInput" />
+                </div>
+            </div>
+
+
+
+
+
+
+        </form>
+    </div>
+</div>
+
+<button id="addPaymentButton" class="btn btn-primary">
+    Save
+</button>
+<a href="/Payments" class="btn btn-secondary"> Cancel</a>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#addPaymentButton').click(function (e) {
+                e.preventDefault();
+                var newPayment = {
+                    ContractId: $('#contractIdInput').val(),
+                    TenantId: $('#tenantIdInput').val(),
+                    PaymentDate: $('#paymentDateInput').val(),
+                    Amount: $('#amountInput').val(),
+                    PaymentMethod: $('#paymentMethodInput').val(),
+                    Status: $('#statusInput').val()
+                };
+                $.ajax({
+                    url: 'https://localhost:7012/Payment/AddPayment',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(newPayment),
+                    success: function (data) {
+                        alert('Payment added successfully with ID: ' + data.id);
+                        window.location.href = 'Index';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+}

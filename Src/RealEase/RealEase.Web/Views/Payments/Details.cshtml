@@ -1,5 +1,5 @@
 ﻿@using RealEase.Domain.Entities
-@model Propertie
+@model Payment
 
 @{
     ViewData["Title"] = "Details";
@@ -8,44 +8,38 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Propertie</h4>
+    <h4>Payment</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Title
+            ContractId
         </dt>
         <dd class="col-sm-10">
-            @Model.Title
+            @Model.ContractId
         </dd>
         <dt class="col-sm-2">
-            Image
+            TenantId
         </dt>
         <dd class="col-sm-10">
-            @Model.Image
+            @Model.TenantId
         </dd>
         <dt class="col-sm-2">
-            Last Description
+            PaymentDate
         </dt>
         <dd class="col-sm-10">
-            @Model.Description
+            @Model.PaymentDate
         </dd>
         <dt class="col-sm-2">
-            Address
+            Amount
         </dt>
         <dd class="col-sm-10">
-            @Model.Address
+            @Model.Amount
         </dd>
         <dt class="col-sm-2">
-            Price
+            PaymentMethod
         </dt>
         <dd class="col-sm-10">
-            @Model.Price
-        </dd>
-        <dt class="col-sm-2">
-            Property Type
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PropertyType
+            @Model.PaymentMethod
         </dd>
         <dt class="col-sm-2">
             Status
@@ -53,13 +47,7 @@
         <dd class="col-sm-10">
             @Model.Status
         </dd>
-        <dt class="col-sm-2">
-            OwnerId
-        </dt>
-        <dd class="col-sm-10">
-            @Model.OwnerId
-        </dd>
-        
+
     </dl>
 </div>
 <div>

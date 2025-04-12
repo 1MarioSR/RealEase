@@ -5,9 +5,9 @@ namespace RealEase.Web.Models
     public class ContractsViewModel
     {
 
-        public List<User> ActiveContracts { get; set; }
+        public List<Contract> ActiveContracts { get; set; }
 
-        public List<User> AllContracts { get; set; }
+        public List<Contract> AllContracts { get; set; }
     }
 
 

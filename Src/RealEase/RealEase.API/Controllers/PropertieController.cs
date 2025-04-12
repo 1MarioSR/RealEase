@@ -43,6 +43,7 @@ namespace RealEase.API.Controllers
             {
                 Id = PropertieDb.Id,
                 Title = PropertieDb.Title,
+                Image = PropertieDb.Image,
                 Description = PropertieDb.Description,
                 Address = PropertieDb.Address,
                 Price = PropertieDb.Price,
@@ -69,6 +70,7 @@ namespace RealEase.API.Controllers
             var propertieDb = new Propertie
             {
                 Title = request.Title,
+                Image = request.Image,
                 Description = request.Description,
                 Address = request.Address,
                 Price = request.Price,
@@ -99,6 +101,7 @@ namespace RealEase.API.Controllers
             }
 
             PropertieDb.Title = request.Title;
+            PropertieDb.Image = request.Image;
             PropertieDb.Description = request.Description;
             PropertieDb.Address = request.Address;
             PropertieDb.Price = request.Price;

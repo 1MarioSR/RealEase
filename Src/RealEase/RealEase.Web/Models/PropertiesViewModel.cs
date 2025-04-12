@@ -5,9 +5,9 @@ namespace RealEase.Web.Models
     public class PropertiesViewModel
     {
 
-        public List<User> ActiveProperties { get; set; }
+        public List<Propertie> ActiveProperties { get; set; }
 
-        public List<User> AllProperties { get; set; }
+        public List<Propertie> AllProperties { get; set; }
     }
 
 
