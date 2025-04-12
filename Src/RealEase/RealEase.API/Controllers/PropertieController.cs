@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RealEase.API.Dtos;
 using RealEase.API.Requests;
 using RealEase.API.Responses;
+using RealEase.Domain.Entities;
 using RealEase.Persistence.Context;
 using System.Net;
 using static RealEase.API.Requests.NewPropertieRequest;
@@ -67,22 +68,22 @@ namespace RealEase.API.Controllers
                 return BadRequest(new { message = "User does not exist." });
             }
 
-            var propertieDb = new Propertie
-            {
-                Title = request.Title,
-                Image = request.Image,
-                Description = request.Description,
-                Address = request.Address,
-                Price = request.Price,
-                PropertyType = request.PropertyType,
-                Status = request.Status,
-                OwnerId = request.OwnerId
-            };
+            var PropertieDb = new Propertie();
+           
+             PropertieDb.Title = request.Title;
+             PropertieDb.Image = request.Image;
+             PropertieDb.Description = request.Description;
+             PropertieDb.Address = request.Address;
+             PropertieDb.Price = request.Price;
+             PropertieDb.PropertyType = request.PropertyType;
+             PropertieDb.Status = request.Status;
+             PropertieDb.OwnerId = request.OwnerId;
+           
 
-            _context.Properties.Add(propertieDb);
+            _context.Properties.Add(PropertieDb);
             await _context.SaveChangesAsync();
 
-            return Ok(new NewPropertieResponse { Id = propertieDb.Id });
+            return Ok(new NewPropertieResponse { Id = PropertieDb.Id });
         }
 
             //var response = new NewPropertieResponse { Id = PropertieDb.Id };

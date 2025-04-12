@@ -66,15 +66,15 @@ namespace RealEase.API.Controllers
             //    return BadRequest(new { message = "User does not exist." });
             //}
 
-            var PaymentDb = new Payment
-            {
-                ContractId = request.ContractId,
-                TenantId = request.TenantId,
-                PaymentDate = request.PaymentDate,
-                Amount = request.Amount,
-                PaymentMethod = request.PaymentMethod,
-                Status = request.Status
-            };
+            var PaymentDb = new Payment();
+            
+            PaymentDb.ContractId = request.ContractId;
+            PaymentDb.TenantId = request.TenantId;
+            PaymentDb.PaymentDate = request.PaymentDate;
+            PaymentDb.Amount = request.Amount;
+            PaymentDb.PaymentMethod = request.PaymentMethod;
+            PaymentDb.Status = request.Status;
+           
 
             _context.Payments.Add(PaymentDb);
             await _context.SaveChangesAsync();

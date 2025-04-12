@@ -17,6 +17,7 @@ namespace RealEase.Persistence.Context
 
         public DbSet<Propertie> Properties { get; set; }
 
+        public DbSet<Visit> Visits { get; set; }
 
         public DbSet<Contract> Contracts { get; set; }
 

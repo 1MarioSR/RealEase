@@ -67,16 +67,16 @@ namespace RealEase.API.Controllers
             //    return BadRequest(new { message = "User does not exist." });
             //}
 
-            var ContractDb = new Contract
-            {
-                ClientId = request.ClientId,
-                AgentId = request.AgentId,
-                PropertyId = request.PropertyId,
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
-                MonthlyAmount = request.MonthlyAmount,
-                Status = request.Status
-            };
+            var ContractDb = new Contract();
+           
+            ContractDb.ClientId = request.ClientId;
+            ContractDb.AgentId = request.AgentId;
+            ContractDb.PropertyId = request.PropertyId;
+            ContractDb.StartDate = request.StartDate;
+            ContractDb.EndDate = request.EndDate;
+            ContractDb.MonthlyAmount = request.MonthlyAmount;
+            ContractDb.Status = request.Status;
+          
 
             _context.Contracts.Add(ContractDb);
             await _context.SaveChangesAsync();

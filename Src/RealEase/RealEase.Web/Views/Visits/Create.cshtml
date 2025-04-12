@@ -1,0 +1,104 @@
+﻿@using RealEase.Domain.Entities
+@model Visit
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Visit</h1>
+
+<h4>Visit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> PropertyId</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" step="1" class="form-control" id="propertyIdInput" />
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> UserId</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" step="1" class="form-control" id="userIdInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> VisitDate</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="visitDateInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Status</label>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control" id="statusInput" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label col-md-5"> Notes</label>
+                </div>
+                <div class="col-md-6">
+                    <input  class="form-control" id="notesInput" />
+                </div>
+            </div>
+
+            
+            
+
+        </form>
+    </div>
+</div>
+
+<button id="addVisitButton" class="btn btn-primary">
+    Save
+</button>
+<a href="/Visits" class="btn btn-secondary"> Cancel</a>
+    
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#addVisitButton').click(function (e) {
+                e.preventDefault();
+                var newVisit = {
+                    PropertyId: $('#propertyIdInput').val(),
+                    UserId: $('#userIdInput').val(),
+                    VisitDate: $('#visitDateInput').val(),
+                    Status: $('#statusInput').val(),
+                    Notes: $('#notesInput').val()
+
+                };
+                $.ajax({
+                    url: 'https://localhost:7012/Visit/AddVisit',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(newVisit),
+                    success: function (data) {
+                        alert('Visit added successfully with ID: ' + data.id);
+                        window.location.href = 'Index';
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+}

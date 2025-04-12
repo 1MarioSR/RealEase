@@ -1,0 +1,204 @@
+﻿   @model VisitsViewModel
+
+@{
+    ViewData["Title"] = "Visit List";
+
+
+}
+
+
+
+    <h2 class="text-primary">All Visits</h2>
+    <a class="btn btn-primary" id="addVisitButton" > Add </a>
+        
+   
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="text-secondary">All Visits</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>PropertyId</th>
+                    <th>UserId</th>
+                    <th>VisitDate</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            <tbody id="VisitsTableBody">
+                <tr>
+                    <td colspan="7">No Records found</td>
+                </tr>
+            </tbody>
+                @* @if (Model.AllVisits != null && Model.AllVisits.Any())
+                {
+                    @foreach (var Visit in Model.AllVisits)
+                    {
+                        <tr>
+                            <td>@Visit.Id</td>
+                            <td>@Visit.Name</td>
+                            <td>@Visit.Lastname</td>
+                            <td>@Visit.Address</td>
+                            <td>
+                                @if (Visit.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No Visits found.</td>
+                    </tr>
+                }
+            </tbody>*@      
+            </table>
+    </div>
+</div> 
+
+
+@* <div class="card shadow-sm mt-5">
+    <div class="card-body">
+        <h4 class="text-secondary">Active Visits</h4>
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Address</th>
+                    <th>Is Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ActiveVisits != null && Model.ActiveVisits.Any())
+                {
+                    @foreach (var Visit in Model.ActiveVisits)
+                    {
+                        <tr>
+                            <td>@Visit.Id</td>
+                            <td>@Visit.Name</td>
+                            <td>@Visit.Lastname</td>
+                            <td>@Visit.Address</td>
+                            <td>
+                                <span class="badge bg-success">Active</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Visit.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-muted">No active Visits found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
+ </table> *@
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            loadVisits();
+
+            $('#addVisitButton').click(function () {
+                window.location.href = 'https://localhost:7146/Visits/Create';
+            });
+
+            $(document).on('click', '.delete-Visit', function () {
+                var VisitId = $(this).data('id');
+                if (confirm('Are you sure you want to delete this Visit?')) {
+                    $.ajax({
+                        url: 'https://localhost:7012/Visit/DeleteVisit/' + VisitId,
+                        type: 'DELETE',
+                        success: function () {
+                            alert('Visit deleted successfully');
+                            loadVisits();
+                        },
+                        error: function (error) {
+                            console.log('Error:', error);
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '.edit-Visit', function () {
+                var VisitId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Visits/Edit/' + VisitId;
+            });
+
+        });
+
+        function loadVisits() {
+            $.ajax({
+                url: 'https://localhost:7012/Visit/GetVisits',
+                type: 'GET',
+                success: function (data) {
+                    var tableBody = '';
+                    if (data.length === 0) {
+                        tableBody = '<tr><td colspan="7">No Records found</td></tr>';
+                    } else {
+                        $.each(data, function (index, Visit) {
+                            tableBody += '<tr>' +
+                                '<td>' + Visit.id + '</td>' +
+                                '<td>' + Visit.propertyId + '</td>' +
+                                '<td>' + Visit.userId + '</td>' +
+                                '<td>' + Visit.visitDate + '</td>' +
+                                '<td>' + Visit.status + '</td>' +
+                                '<td>' + Visit.notes +
+                                '<td>' +
+                                '<a class="btn btn-warning edit-Visit" data-id="' + Visit.id + '">Edit</a> ' +
+                                '<button class="btn btn-danger delete-Visit" data-id="' + Visit.id + '">Delete</button>' +
+                                '</td>' +
+                                '</tr>';
+                        });
+                    }
+                    $('#VisitsTableBody').html(tableBody);
+                     
+
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+    </script>
+
+}
