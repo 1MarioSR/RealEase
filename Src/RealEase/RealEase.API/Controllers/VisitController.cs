@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using RealEase.API.Dtos;
 using RealEase.API.Requests;
 using RealEase.API.Responses;
-using RealEase.Persistence.Context;
-using System.Net;
-using static RealEase.API.Requests.NewVisitRequest;
-using Visit = RealEase.Domain.Entities.Visit;
-
-
+using RealEase.Domain.Entities;
+using RealEase.Infrastructure.Interfaces;
 
 namespace RealEase.API.Controllers
 {
@@ -17,112 +10,88 @@ namespace RealEase.API.Controllers
     [Route("[controller]")]
     public class VisitController : ControllerBase
     {
-        private readonly RealEaseDbContext _context;
+        private readonly IVisitRepository _visitRepository;
 
-        public VisitController(RealEaseDbContext context)
+        public VisitController(IVisitRepository visitRepository)
         {
-            _context = context;
+            _visitRepository = visitRepository;
         }
 
-        [HttpGet(nameof(GetVisits))]
-        public async Task<ActionResult<List<Visit>>> GetVisits()
+        [HttpGet("GetVisits")]
+        public async Task<IActionResult> GetAllVisits()
         {
-            return await _context.Visits.ToListAsync();
+            var visits = await _visitRepository.GetAllAsync();
+            return Ok(visits);
         }
 
-        [HttpGet("GetVisit/{Id}")]
-        public async Task<ActionResult<VisitDto>> GetVisit(int Id)
+        [HttpGet("GetVisit/{id}")]
+        public async Task<ActionResult<Visit>> GetById([FromRoute] int id)
         {
-            var VisitDb = await _context.Visits.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            if (VisitDb == null)
-            {
-                return NotFound();
-            }
+            var visit = await _visitRepository.GetByIdAsync(id);
+            if (visit == null) return NotFound(new { message = "Visita no encontrada." });
 
-            var VisitDto = new VisitDto
+            var visitResponse = new
             {
-                Id = VisitDb.Id,
-                PropertyId = VisitDb.PropertyId,
-                UserId = VisitDb.UserId,
-                VisitDate = VisitDb.VisitDate,
-                Status = VisitDb.Status,
-                Notes = VisitDb.Notes
-               
+                visit.PropertyId,
+                visit.UserId,
+                visit.VisitDate,
+                visit.Status,
+                visit.Notes
             };
 
-            return Ok(VisitDto);
+            return Ok(visitResponse);
         }
-
 
         [HttpPost("AddVisit")]
         public async Task<ActionResult<NewVisitResponse>> AddVisit(NewVisitRequest request)
         {
+            var visit = new Visit
+            {
+                PropertyId = request.PropertyId,
+                UserId = request.UserId,
+                VisitDate = request.VisitDate,
+                Status = request.Status,
+                Notes = request.Notes
+            };
 
-            //var userExists = await _context.Users.AnyAsync(u => u.Id == request.ClientId);
+            var newVisit = await _visitRepository.CreateAsync(visit);
 
-            //if (!userExists)
-            //{
-            //    return BadRequest(new { message = "User does not exist." });
-            //}
-
-            var VisitDb = new Visit();
-
-            VisitDb.PropertyId = request.PropertyId;
-            VisitDb.UserId = request.UserId;
-            VisitDb.VisitDate = request.VisitDate;
-            VisitDb.Status = request.Status;
-            VisitDb.Notes = request.Notes;
-
-
-            _context.Visits.Add(VisitDb);
-            await _context.SaveChangesAsync();
-
-            return Ok(new NewVisitResponse { Id = VisitDb.Id });
+            return Ok(new NewVisitResponse { Id = newVisit.Id });
         }
 
-        //var response = new NewVisitResponse { Id = VisitDb.Id };
-        //return response;
-        //return VisitDb.Id;
-
-
         [HttpPut("UpdateVisit/{id}")]
-        public async Task<ActionResult<NewVisitResponse>> UpdateVisit(int Id, NewVisitRequest request)
+        public async Task<ActionResult<NewVisitResponse>> UpdateVisit(int id, NewVisitRequest request)
         {
-            var VisitDb = await _context.Visits.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            if (VisitDb == null)
-            {
-                return NotFound();
-            }
+            var existingVisit = await _visitRepository.GetByIdAsync(id);
+            if (existingVisit == null) return NotFound("Visita no encontrada.");
 
-            VisitDb.PropertyId = request.PropertyId;
-            VisitDb.UserId = request.UserId;
-            VisitDb.VisitDate = request.VisitDate;
-            VisitDb.Status = request.Status;
-            VisitDb.Notes = request.Notes;
-            
+            existingVisit.PropertyId = request.PropertyId;
+            existingVisit.UserId = request.UserId;
+            existingVisit.VisitDate = request.VisitDate;
+            existingVisit.Status = request.Status;
+            existingVisit.Notes = request.Notes;
 
-            _context.Visits.Update(VisitDb);
-            await _context.SaveChangesAsync();
+            var updatedVisit = await _visitRepository.UpdateAsync(existingVisit);
 
-            return Ok(new NewVisitResponse { Id = VisitDb.Id });
-
+            return Ok(new NewVisitResponse { Id = updatedVisit.Id });
         }
 
         [HttpDelete("DeleteVisit/{id}")]
-        public async Task<IActionResult> DeleteVisit(int id)
+        public async Task<ActionResult> DeleteVisit(int id)
         {
-            var VisitDb = await _context.Visits.FindAsync(id);
-            if (VisitDb == null)
-            {
-                return NotFound();
-            }
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            _context.Visits.Remove(VisitDb);
-            await _context.SaveChangesAsync();
+            var existingVisit = await _visitRepository.GetByIdAsync(id);
+            if (existingVisit == null) return NotFound("Visita no encontrada.");
 
-            return NoContent();
+            var deleted = await _visitRepository.DeleteAsync(id);
+            if (!deleted) return StatusCode(500, "No se pudo eliminar la visita.");
+
+            return Ok(new { message = "Visita eliminada exitosamente." });
         }
     }
 }

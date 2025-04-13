@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using RealEase.API.Dtos;
 using RealEase.API.Requests;
 using RealEase.API.Responses;
-using RealEase.Persistence.Context;
-using System.Net;
-using static RealEase.API.Requests.NewPaymentRequest;
-using Payment = RealEase.Domain.Entities.Payment;
-
-
+using RealEase.Domain.Entities;
+using RealEase.Infrastructure.Interfaces;
 
 namespace RealEase.API.Controllers
 {
@@ -17,113 +10,91 @@ namespace RealEase.API.Controllers
     [Route("[controller]")]
     public class PaymentController : ControllerBase
     {
-        private readonly RealEaseDbContext _context;
+        private readonly IPaymentRepository _paymentRepository;
 
-        public PaymentController(RealEaseDbContext context)
+        public PaymentController(IPaymentRepository paymentRepository)
         {
-            _context = context;
+            _paymentRepository = paymentRepository;
         }
 
-        [HttpGet(nameof(GetPayments))]
-        public async Task<ActionResult<List<Payment>>> GetPayments()
+        [HttpGet("GetPayments")]
+        public async Task<IActionResult> GetAllPayments()
         {
-            return await _context.Payments.ToListAsync();
+            var payments = await _paymentRepository.GetAllAsync();
+            return Ok(payments);
         }
 
-        [HttpGet("GetPayment/{Id}")]
-        public async Task<ActionResult<PaymentDto>> GetPayment(int Id)
+        [HttpGet("GetPayment/{id}")]
+        public async Task<ActionResult<Payment>> GetById([FromRoute] int id)
         {
-            var PaymentDb = await _context.Payments.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            if (PaymentDb == null)
-            {
-                return NotFound();
-            }
+            var payment = await _paymentRepository.GetByIdAsync(id);
+            if (payment == null) return NotFound(new { message = "Pago no encontrado." });
 
-            var PaymentDto = new PaymentDto
+            var paymentResponse = new
             {
-                Id = PaymentDb.Id,
-                ContractId = PaymentDb.ContractId,
-                TenantId = PaymentDb.TenantId,
-                PaymentDate = PaymentDb.PaymentDate,
-                Amount = PaymentDb.Amount,
-                PaymentMethod = PaymentDb.PaymentMethod,
-                Status = PaymentDb.Status
+                payment.ContractId,
+                payment.TenantId,
+                payment.PaymentDate,
+                payment.Amount,
+                payment.PaymentMethod,
+                payment.Status
             };
 
-            return Ok(PaymentDto);
+            return Ok(paymentResponse);
         }
-
 
         [HttpPost("AddPayment")]
         public async Task<ActionResult<NewPaymentResponse>> AddPayment(NewPaymentRequest request)
         {
+            var payment = new Payment
+            {
+                ContractId = request.ContractId,
+                TenantId = request.TenantId,
+                PaymentDate = request.PaymentDate,
+                Amount = request.Amount,
+                PaymentMethod = request.PaymentMethod,
+                Status = request.Status
+            };
 
-            //var userExists = await _context.Users.AnyAsync(u => u.Id == request.ClientId);
+            var newPayment = await _paymentRepository.CreateAsync(payment);
 
-            //if (!userExists)
-            //{
-            //    return BadRequest(new { message = "User does not exist." });
-            //}
-
-            var PaymentDb = new Payment();
-            
-            PaymentDb.ContractId = request.ContractId;
-            PaymentDb.TenantId = request.TenantId;
-            PaymentDb.PaymentDate = request.PaymentDate;
-            PaymentDb.Amount = request.Amount;
-            PaymentDb.PaymentMethod = request.PaymentMethod;
-            PaymentDb.Status = request.Status;
-           
-
-            _context.Payments.Add(PaymentDb);
-            await _context.SaveChangesAsync();
-
-            return Ok(new NewPaymentResponse { Id = PaymentDb.Id });
+            return Ok(new NewPaymentResponse { Id = newPayment.Id });
         }
 
-        //var response = new NewPaymentResponse { Id = PaymentDb.Id };
-        //return response;
-        //return PaymentDb.Id;
-
-
         [HttpPut("UpdatePayment/{id}")]
-        public async Task<ActionResult<NewPaymentResponse>> UpdatePayment(int Id, NewPaymentRequest request)
+        public async Task<ActionResult<NewPaymentResponse>> UpdatePayment(int id, NewPaymentRequest request)
         {
-            var PaymentDb = await _context.Payments.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            if (PaymentDb == null)
-            {
-                return NotFound();
-            }
+            var existingPayment = await _paymentRepository.GetByIdAsync(id);
+            if (existingPayment == null) return NotFound("Pago no encontrado.");
 
-            PaymentDb.ContractId = request.ContractId;
-            PaymentDb.TenantId = request.TenantId;
-            PaymentDb.PaymentDate = request.PaymentDate;
-            PaymentDb.Amount = request.Amount;
-            PaymentDb.PaymentMethod = request.PaymentMethod;
-            PaymentDb.Status = request.Status;
+            existingPayment.ContractId = request.ContractId;
+            existingPayment.TenantId = request.TenantId;
+            existingPayment.PaymentDate = request.PaymentDate;
+            existingPayment.Amount = request.Amount;
+            existingPayment.PaymentMethod = request.PaymentMethod;
+            existingPayment.Status = request.Status;
 
-            _context.Payments.Update(PaymentDb);
-            await _context.SaveChangesAsync();
+            var updatedPayment = await _paymentRepository.UpdateAsync(existingPayment);
 
-            return Ok(new NewPaymentResponse { Id = PaymentDb.Id });
-
+            return Ok(new NewPaymentResponse { Id = updatedPayment.Id });
         }
 
         [HttpDelete("DeletePayment/{id}")]
-        public async Task<IActionResult> DeletePayment(int id)
+        public async Task<ActionResult> DeletePayment(int id)
         {
-            var PaymentDb = await _context.Payments.FindAsync(id);
-            if (PaymentDb == null)
-            {
-                return NotFound();
-            }
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            _context.Payments.Remove(PaymentDb);
-            await _context.SaveChangesAsync();
+            var existingPayment = await _paymentRepository.GetByIdAsync(id);
+            if (existingPayment == null) return NotFound("Pago no encontrado.");
 
-            return NoContent();
+            var deleted = await _paymentRepository.DeleteAsync(id);
+            if (!deleted) return StatusCode(500, "No se pudo eliminar el pago.");
+
+            return Ok(new { message = "Pago eliminado exitosamente." });
         }
     }
 }

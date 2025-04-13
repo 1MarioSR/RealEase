@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RealEase.Domain\RealEase.Domain.csproj" />
+    <ProjectReference Include="..\RealEase.Infraestructure\RealEase.Infrastructure.csproj" />
     <ProjectReference Include="..\RealEase.Persistence\RealEase.Persistence.csproj" />
   </ItemGroup>
 

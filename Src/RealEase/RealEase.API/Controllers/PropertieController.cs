@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RealEase.API.Dtos;
 using RealEase.API.Requests;
 using RealEase.API.Responses;
 using RealEase.Domain.Entities;
-using RealEase.Persistence.Context;
-using System.Net;
-using static RealEase.API.Requests.NewPropertieRequest;
-using Propertie = RealEase.Domain.Entities.Propertie;
-
-
+using RealEase.Infrastructure.Interfaces;
 
 namespace RealEase.API.Controllers
 {
@@ -17,119 +10,99 @@ namespace RealEase.API.Controllers
     [Route("[controller]")]
     public class PropertieController : ControllerBase
     {
-        private readonly RealEaseDbContext _context;
+        private readonly IPropertieRepository _propertieRepository;
 
-        public PropertieController(RealEaseDbContext context)
+        public PropertieController(IPropertieRepository propertieRepository)
         {
-            _context = context;
+            _propertieRepository = propertieRepository;
         }
 
-        [HttpGet(nameof(GetProperties))]
-        public async Task<ActionResult<List<Propertie>>> GetProperties()
+        [HttpGet("GetProperties")]
+        public async Task<IActionResult> GetAllProperties()
         {
-            return await _context.Properties.ToListAsync();
+            var properties = await _propertieRepository.GetAllAsync();
+            return Ok(properties);
         }
 
-        [HttpGet("GetPropertie/{Id}")]
-        public async Task<ActionResult<PropertieDto>> GetPropertie(int Id)
+        [HttpGet("GetPropertie/{id}")]
+        public async Task<ActionResult<Propertie>> GetById([FromRoute] int id)
         {
-            var PropertieDb = await _context.Properties.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            if (PropertieDb == null)
-            {
-                return NotFound();
-            }
+            var propertie = await _propertieRepository.GetByIdAsync(id);
+            if (propertie == null) return NotFound(new { message = "Propiedad no encontrada." });
 
-            var PropertieDto = new PropertieDto
+            var propertieResponse = new
             {
-                Id = PropertieDb.Id,
-                Title = PropertieDb.Title,
-                Image = PropertieDb.Image,
-                Description = PropertieDb.Description,
-                Address = PropertieDb.Address,
-                Price = PropertieDb.Price,
-                PropertyType = PropertieDb.PropertyType,
-                Status = PropertieDb.Status,
-                OwnerId = PropertieDb.OwnerId
+                propertie.Title,
+                propertie.Image,
+                propertie.Description,
+                propertie.Address,
+                propertie.Price,
+                propertie.PropertyType,
+                propertie.Status,
+                propertie.OwnerId
             };
 
-            return Ok(PropertieDto);
+            return Ok(propertieResponse);
         }
-
 
         [HttpPost("AddPropertie")]
         public async Task<ActionResult<NewPropertieResponse>> AddPropertie(NewPropertieRequest request)
         {
-
-            var userExists = await _context.Users.AnyAsync(u => u.Id == request.OwnerId);
-
-            if (!userExists)
+            var propertie = new Propertie
             {
-                return BadRequest(new { message = "User does not exist." });
-            }
+                Title = request.Title,
+                Image = request.Image,
+                Description = request.Description,
+                Address = request.Address,
+                Price = request.Price,
+                PropertyType = request.PropertyType,
+                Status = request.Status,
+                OwnerId = request.OwnerId
+            };
 
-            var PropertieDb = new Propertie();
-           
-             PropertieDb.Title = request.Title;
-             PropertieDb.Image = request.Image;
-             PropertieDb.Description = request.Description;
-             PropertieDb.Address = request.Address;
-             PropertieDb.Price = request.Price;
-             PropertieDb.PropertyType = request.PropertyType;
-             PropertieDb.Status = request.Status;
-             PropertieDb.OwnerId = request.OwnerId;
-           
+            var newPropertie = await _propertieRepository.CreateAsync(propertie);
 
-            _context.Properties.Add(PropertieDb);
-            await _context.SaveChangesAsync();
-
-            return Ok(new NewPropertieResponse { Id = PropertieDb.Id });
+            return Ok(new NewPropertieResponse { Id = newPropertie.Id });
         }
 
-            //var response = new NewPropertieResponse { Id = PropertieDb.Id };
-            //return response;
-            //return PropertieDb.Id;
-        
-
         [HttpPut("UpdatePropertie/{id}")]
-        public async Task<ActionResult<NewPropertieResponse>> UpdatePropertie(int Id, NewPropertieRequest request)
+        public async Task<ActionResult<NewPropertieResponse>> UpdatePropertie(int id, NewPropertieRequest request)
         {
-            var PropertieDb = await _context.Properties.FindAsync(Id);
+            if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            if (PropertieDb == null)
-            {
-                return NotFound();
-            }
+            var existingPropertie = await _propertieRepository.GetByIdAsync(id);
+            if (existingPropertie == null) return NotFound("Propiedad no encontrada.");
 
-            PropertieDb.Title = request.Title;
-            PropertieDb.Image = request.Image;
-            PropertieDb.Description = request.Description;
-            PropertieDb.Address = request.Address;
-            PropertieDb.Price = request.Price;
-            PropertieDb.PropertyType = request.PropertyType;
-            PropertieDb.Status = request.Status;
-            PropertieDb.OwnerId = request.OwnerId;
+            existingPropertie.Title = request.Title;
+            existingPropertie.Image = request.Image;
+            existingPropertie.Description = request.Description;
+            existingPropertie.Address = request.Address;
+            existingPropertie.Price = request.Price;
+            existingPropertie.PropertyType = request.PropertyType;
+            existingPropertie.Status = request.Status;
+            existingPropertie.OwnerId = request.OwnerId;
 
-            _context.Properties.Update(PropertieDb);
-            await _context.SaveChangesAsync();
+            var updatedPropertie = await _propertieRepository.UpdateAsync(existingPropertie);
 
-            return Ok(new NewPropertieResponse { Id = PropertieDb.Id });
-
+            return Ok(new NewPropertieResponse { Id = updatedPropertie.Id });
         }
 
         [HttpDelete("DeletePropertie/{id}")]
-        public async Task<IActionResult> DeletePropertie(int id)
+        public async Task<ActionResult> DeletePropertie(int id)
         {
-            var PropertieDb = await _context.Properties.FindAsync(id);
-            if (PropertieDb == null)
-            {
-                return NotFound();
-            }
+            if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            _context.Properties.Remove(PropertieDb);
-            await _context.SaveChangesAsync();
+            var existingPropertie = await _propertieRepository.GetByIdAsync(id);
+            if (existingPropertie == null) return NotFound("Propiedad no encontrada.");
 
-            return NoContent();
+
+
+            var deleted = await _propertieRepository.DeleteAsync(id);
+            if (!deleted) return StatusCode(500, "No se pudo eliminar la propiedad.");
+
+            return Ok(new { message = "Propiedad eliminada exitosamente." });
         }
     }
 }
