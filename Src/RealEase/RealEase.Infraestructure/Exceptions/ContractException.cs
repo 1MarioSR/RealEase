@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEase.Infrastructure.Exceptions
 {
-    internal class ContractException
+    public class ContractException : Exception
     {
+        public ContractException(string message) : base(message) { }
     }
 }

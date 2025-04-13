@@ -1,6 +1,6 @@
 ﻿using RealEase.Domain.Entities;
 
-namespace RealEase.Web.Models
+namespace RealEase.Web.ViewsModels
 {
     public class ContractsViewModel
     {

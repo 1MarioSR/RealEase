@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealEase.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace RealEase.Domain.Entities
 {
-    public class Payment
+    public class Payment : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         public int ContractId { get; set; }
         public int TenantId { get; set; }
         public DateTime PaymentDate { get; set; }

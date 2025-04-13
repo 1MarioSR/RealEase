@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="51Degrees.mobi-core" Version="3.2.21.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RealEase.Domain\RealEase.Domain.csproj" />
+    <ProjectReference Include="..\RealEase.Persistence\RealEase.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

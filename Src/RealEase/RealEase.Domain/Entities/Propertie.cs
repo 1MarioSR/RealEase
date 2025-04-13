@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealEase.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace RealEase.Domain.Entities
 {
-    public class Propertie
-    { 
-            [Key]
-            public int Id { get; set; }
+    public class Propertie : BaseEntity
+    {
+            [Required]
             public string Title { get; set; }
             public string Image { get; set; }
             public string Description { get; set; }
+            [Required]
             public string Address { get; set; }
             public decimal Price { get; set; }
             public string PropertyType { get; set; }

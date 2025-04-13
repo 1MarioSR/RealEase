@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealEase.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace RealEase.Domain.Entities
 {
-    public class Visit
+    public class Visit : BaseEntity
     { 
-        [Key]
-
-        public int Id { get; set; }
         public int PropertyId { get; set; }
         public int UserId { get; set; } 
         public DateTime VisitDate { get; set; }

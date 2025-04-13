@@ -1,4 +1,5 @@
-﻿   @model ContractsViewModel
+﻿@using RealEase.Web.ViewsModels
+   @model ContractsViewModel
 
 @{
     ViewData["Title"] = "Contract List";
@@ -34,103 +35,12 @@
                     <td colspan="9">No Records found</td>
                 </tr>
             </tbody>
-                @* @if (Model.AllContracts != null && Model.AllContracts.Any())
-                {
-                    @foreach (var Contract in Model.AllContracts)
-                    {
-                        <tr>
-                            <td>@Contract.Id</td>
-                            <td>@Contract.Name</td>
-                            <td>@Contract.Lastname</td>
-                            <td>@Contract.Address</td>
-                            <td>
-                                @if (Contract.IsActive)
-                                {
-                                    <span class="badge bg-success">Active</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">Inactive</span>
-                                }
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No Contracts found.</td>
-                    </tr>
-                }
-            </tbody>*@      
+              
             </table>
     </div>
 </div> 
 
 
-@* <div class="card shadow-sm mt-5">
-    <div class="card-body">
-        <h4 class="text-secondary">Active Contracts</h4>
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Lastname</th>
-                    <th>Address</th>
-                    <th>Is Active</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.ActiveContracts != null && Model.ActiveContracts.Any())
-                {
-                    @foreach (var Contract in Model.ActiveContracts)
-                    {
-                        <tr>
-                            <td>@Contract.Id</td>
-                            <td>@Contract.Name</td>
-                            <td>@Contract.Lastname</td>
-                            <td>@Contract.Address</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Contract.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No active Contracts found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div> 
- </table> *@
 
 @section Scripts
 {

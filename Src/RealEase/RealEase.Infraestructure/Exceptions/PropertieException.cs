@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEase.Infrastructure.Exceptions
 {
-    internal class PropertieException
+    public class PropertieException : Exception
     {
+        public PropertieException(string message) : base(message) { }
     }
 }

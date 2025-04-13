@@ -1,4 +1,5 @@
-﻿    @model PaymentsViewModel
+﻿@using RealEase.Web.ViewsModels
+    @model PaymentsViewModel
 
 @{
     ViewData["Title"] = "Payment List";
@@ -32,104 +33,11 @@
                 <tr>
                     <td colspan="8">No Records found</td>
                 </tr>
-            </tbody>
-                @* @if (Model.AllPayments != null && Model.AllPayments.Any())
-                {
-                    @foreach (var Payment in Model.AllPayments)
-                    {
-                        <tr>
-                            <td>@Payment.Id</td>
-                            <td>@Payment.Name</td>
-                            <td>@Payment.Lastname</td>
-                            <td>@Payment.Address</td>
-                            <td>
-                                @if (Payment.IsActive)
-                                {
-                                    <span class="badge bg-success">Active</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">Inactive</span>
-                                }
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No Payments found.</td>
-                    </tr>
-                }
-            </tbody>*@      
+            </tbody>  
             </table>
     </div>
 </div>
 
-
-@* <div class="card shadow-sm mt-5">
-    <div class="card-body">
-        <h4 class="text-secondary">Active Payments</h4>
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Lastname</th>
-                    <th>Address</th>
-                    <th>Is Active</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.ActivePayments != null && Model.ActivePayments.Any())
-                {
-                    @foreach (var Payment in Model.ActivePayments)
-                    {
-                        <tr>
-                            <td>@Payment.Id</td>
-                            <td>@Payment.Name</td>
-                            <td>@Payment.Lastname</td>
-                            <td>@Payment.Address</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Payment.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No active Payments found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div> 
- </table> *@
 
 @section Scripts
 {

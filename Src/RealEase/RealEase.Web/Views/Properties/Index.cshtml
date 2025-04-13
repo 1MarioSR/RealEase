@@ -1,4 +1,5 @@
-﻿   @model PropertiesViewModel
+﻿ @using RealEase.Web.ViewsModels
+   @model PropertiesViewModel
 
 @{
     ViewData["Title"] = "Propertie List";
@@ -35,103 +36,9 @@
                     <td colspan="10">No Records found</td>
                 </tr>
             </tbody>
-                @* @if (Model.AllProperties != null && Model.AllProperties.Any())
-                {
-                    @foreach (var Propertie in Model.AllProperties)
-                    {
-                        <tr>
-                            <td>@Propertie.Id</td>
-                            <td>@Propertie.Name</td>
-                            <td>@Propertie.Lastname</td>
-                            <td>@Propertie.Address</td>
-                            <td>
-                                @if (Propertie.IsActive)
-                                {
-                                    <span class="badge bg-success">Active</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">Inactive</span>
-                                }
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No Properties found.</td>
-                    </tr>
-                }
-            </tbody>*@      
             </table>
     </div>
 </div> 
-
-
-@* <div class="card shadow-sm mt-5">
-    <div class="card-body">
-        <h4 class="text-secondary">Active Properties</h4>
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Lastname</th>
-                    <th>Address</th>
-                    <th>Is Active</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.ActiveProperties != null && Model.ActiveProperties.Any())
-                {
-                    @foreach (var Propertie in Model.ActiveProperties)
-                    {
-                        <tr>
-                            <td>@Propertie.Id</td>
-                            <td>@Propertie.Name</td>
-                            <td>@Propertie.Lastname</td>
-                            <td>@Propertie.Address</td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-info-circle"></i> Details
-                                </a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@Propertie.Id">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="7" class="text-muted">No active Properties found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div> 
- </table> *@
 
 @section Scripts
 {

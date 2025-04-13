@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RealEase.Domain.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace RealEase.Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
-
+        [Required]
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }

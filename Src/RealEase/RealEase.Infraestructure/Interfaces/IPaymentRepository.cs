@@ -1,12 +1,18 @@
-﻿using System;
+﻿using RealEase.Domain.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RealEase.Infrastructure.Interfaces
 {
-    internal class IPaymentRepository
+    public interface IPaymentRepository
     {
+        Task<List<Payment>> GetAllAsync();
+        Task<Payment> GetByIdAsync(int id);
+        Task<Payment> CreateAsync(Payment payment);
+        Task<Payment> UpdateAsync(Payment payment);
+        Task<bool> DeleteAsync(int id);
+        Task<List<Payment>> GetPaymentsByTenantIdAsync(int tenantId);
+        Task<List<Payment>> GetPaymentsByContractIdAsync(int contractId);
+        Task<List<Payment>> GetPaymentsByStatusAsync(string status);
     }
 }
