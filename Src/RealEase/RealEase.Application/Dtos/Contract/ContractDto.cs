@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RealEase.API.Dtos
+namespace RealEase.Application.Dtos.Contract
 {
     public class ContractDto
     {

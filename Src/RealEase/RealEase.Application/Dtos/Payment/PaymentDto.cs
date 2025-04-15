@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RealEase.API.Dtos
+namespace RealEase.Application.Dtos.Payment
 {
     public class PaymentDto
     {

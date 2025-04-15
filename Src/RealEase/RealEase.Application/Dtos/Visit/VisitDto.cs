@@ -1,4 +1,4 @@
-﻿namespace RealEase.API.Dtos
+﻿namespace RealEase.Application.Dtos.Visit
 {
     public class VisitDto
     {
