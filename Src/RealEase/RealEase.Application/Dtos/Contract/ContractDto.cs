@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RealEase.Application.Dtos.Contract
+﻿namespace RealEase.Application.Dtos.Contract
 {
     public class ContractDto
     {

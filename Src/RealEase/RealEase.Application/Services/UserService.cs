@@ -1,12 +1,7 @@
 ﻿using RealEase.Infrastructure.Core;
 using RealEase.Infrastructure.Repositories;
-using RealEase.Infrastructure.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using RealEase.Application.Dtos.User;
 using RealEase.Domain.Entities;
-using Umbraco.Core.Services;
 
 namespace RealEase.Application.Services
 {
@@ -149,19 +144,5 @@ namespace RealEase.Application.Services
             }
         }
 
-        //public object GetUserById(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task GetUserAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task<int> CreateUserAsync(UserDto dto)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

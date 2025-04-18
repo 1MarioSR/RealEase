@@ -1,8 +1,6 @@
 ﻿using RealEase.Infrastructure.Core;
-using RealEase.Infrastructure.Repositories;
 using RealEase.Application.Dtos.Contract;
 using RealEase.Domain.Entities;
-
 
 namespace RealEase.Application.Services
 {
@@ -148,11 +146,6 @@ namespace RealEase.Application.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 return false;
             }
-        }
-
-        public async Task GetAllContractsAsync(string empty)
-        {
-            throw new NotImplementedException();
         }
     }
 }

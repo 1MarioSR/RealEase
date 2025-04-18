@@ -1,6 +1,4 @@
-﻿using RealEase.Persistence;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using RealEase.Persistence.Context;
 
 namespace RealEase.Infrastructure.Core

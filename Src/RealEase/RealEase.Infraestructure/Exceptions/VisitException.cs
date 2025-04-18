@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RealEase.Infrastructure.Exceptions
+﻿namespace RealEase.Infrastructure.Exceptions
 {
     public class VisitException : Exception
     {

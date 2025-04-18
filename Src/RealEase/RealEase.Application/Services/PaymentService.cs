@@ -1,10 +1,7 @@
 ﻿using RealEase.Application.Dtos.Payment;
 using RealEase.Domain.Entities;
 using RealEase.Infrastructure.Core;
-using RealEase.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace RealEase.Application.Services
 {

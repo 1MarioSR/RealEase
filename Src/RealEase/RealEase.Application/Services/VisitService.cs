@@ -2,9 +2,6 @@
 using RealEase.Infrastructure.Repositories;
 using RealEase.Application.Dtos.Visit;
 using RealEase.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace RealEase.Application.Services
 {

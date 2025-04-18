@@ -1,6 +1,4 @@
 ﻿using RealEase.Domain.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace RealEase.Infrastructure.Interfaces
 {

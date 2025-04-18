@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace RealEase.Application.Dtos.Propertie
+﻿namespace RealEase.Application.Dtos.Propertie
 {
     public class PropertieDto
     {

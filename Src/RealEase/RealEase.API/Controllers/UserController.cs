@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEase.Application.Dtos.User;
 using RealEase.Application.Services;
-using RealEase.Domain.Entities;
 
 namespace RealEase.API.Controllers
 {

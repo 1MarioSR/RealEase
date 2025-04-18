@@ -62,7 +62,6 @@ namespace RealEase.API.Controllers
         {
             if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            // Asignar el ID de la ruta al objeto request directamente
             request.Id = id;
 
             var existingPayment = await _paymentService.GetPaymentByIdAsync(id);

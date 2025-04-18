@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEase.Application.Dtos.Propertie;
 using RealEase.Application.Services;
-using RealEase.Domain.Entities;
 
 namespace RealEase.API.Controllers
 {
@@ -65,7 +64,6 @@ namespace RealEase.API.Controllers
         {
             if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            // Asignar el ID de la ruta al objeto request directamente
             request.Id = id;
 
             var existingPropertie = await _propertieService.GetPropertieByIdAsync(id);
