@@ -2,106 +2,81 @@
 @model Propertie
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Propiedad";
 }
 
-<h1>Create Propertie</h1>
+<h1 class="text-center text-success mb-4">Crear Propiedad</h1>
+<h5 class="text-center text-muted mb-4">Completa el formulario para registrar una nueva propiedad</h5>
 
-<h4>Propertie</h4>
-<hr />
-<div class="row">
-    <div class="col-md-5">
-        <form asp-action="Create">
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Title</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="titleInput" />
-                </div>
-            </div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4 bg-light rounded-3">
+            <form asp-action="Create" id="createPropertieForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Image</label>
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="form-label text-primary">Título</label>
+                    <input asp-for="Title" class="form-control" id="titleInput" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input type= "url" class="form-control" id="imageInput" />
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Description</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="descriptionInput" />
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Address</label>
+                <div class="form-group mb-3">
+                    <label asp-for="Image" class="form-label text-primary">Imagen (URL)</label>
+                    <input asp-for="Image" class="form-control" id="imageInput" type="url" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="addressInput" />
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Price</label>
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="form-label text-primary">Descripción</label>
+                    <input asp-for="Description" class="form-control" id="descriptionInput" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="priceInput" />
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> PropertyType</label>
+                <div class="form-group mb-3">
+                    <label asp-for="Address" class="form-label text-primary">Dirección</label>
+                    <input asp-for="Address" class="form-control" id="addressInput" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="propertyTypeInput" placeholder="Ej. Apartamento" />
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-md-2">
-                    <label class="form-label"> Status</label>
+                <div class="form-group mb-3">
+                    <label asp-for="Price" class="form-label text-primary">Precio</label>
+                    <input asp-for="Price" class="form-control" id="priceInput" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="statusInput" list="status" placeholder="Ej. Disponible" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="PropertyType" class="form-label text-primary">Tipo de Propiedad</label>
+                    <input asp-for="PropertyType" class="form-control" id="propertyTypeInput" placeholder="Ej. Apartamento" />
+                    <span asp-validation-for="PropertyType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Status" class="form-label text-primary">Estado</label>
+                    <input asp-for="Status" class="form-control" id="statusInput" list="status" placeholder="Ej. Disponible" />
                     <datalist id="status">
                         <option value="Pendiente" />
                         <option value="Disponible" />
                         <option value="Vendido" />
                     </datalist>
+                    <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> OwnerId</label>
+                <div class="form-group mb-4">
+                    <label asp-for="OwnerId" class="form-label text-primary">ID del Dueño</label>
+                    <input asp-for="OwnerId" type="number" step="1" class="form-control" id="ownerIdInput" />
+                    <span asp-validation-for="OwnerId" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <input type="number" step="1" class="form-control" id="ownerIdInput" />
+
+                <div class="text-center">
+                    <button type="submit" id="addPropertieButton" class="btn btn-success me-2">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
                 </div>
-            </div>
-
-
-            
-
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
-<button id="addPropertieButton" class="btn btn-primary">
-    Save
-</button>
-<a href="/Properties" class="btn btn-secondary"> Cancel</a>
-    
+
 
 @section Scripts {
     <script>

@@ -7,36 +7,59 @@
 
 }
 
+<style>
+    body {
+        background-color: #f5f5dc; 
+    }
 
+    .btn-green {
+        background-color: #4CAF50;
+        color: white;
+    }
 
-<h2 class="text-primary">All Payments</h2>
-<a class="btn btn-primary" id="addPaymentButton"> Add </a>
+        .btn-green:hover {
+            background-color: #45a049;
+        }
 
+    .table-custom th {
+        background-color: #4CAF50;
+        color: white;
+    }
 
+    .text-green {
+        color: #4CAF50;
+    }
+</style>
 
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h4 class="text-secondary">All Payments</h4>
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-dark">
+<h2 class="text-green mb-4">Pagos Registrados</h2>
+
+<a class="btn btn-green mb-3" id="addPaymentButton">💳 Añadir Pago</a>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body bg-white rounded-3">
+        <h4 class="text-secondary">Listado de Pagos</h4>
+        <table class="table table-hover text-center table-bordered table-custom">
+            <thead>
                 <tr>
                     <th>Id</th>
-                    <th>ContractId </th>
-                    <th>TenantId</th>
-                    <th>PaymentDate</th>
-                    <th>Amount</th>
-                    <th>PaymentMethod</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>ID Contrato</th>
+                    <th>ID Inquilino</th>
+                    <th>Fecha de Pago</th>
+                    <th>Monto</th>
+                    <th>Método de Pago</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
+            </thead>
             <tbody id="PaymentsTableBody">
                 <tr>
-                    <td colspan="8">No Records found</td>
+                    <td colspan="8">No se encontraron registros</td>
                 </tr>
-            </tbody>  
-            </table>
+            </tbody>
+        </table>
     </div>
 </div>
+
 
 
 @section Scripts
@@ -72,6 +95,11 @@
                 window.location.href = 'https://localhost:7146/Payments/Edit/' + PaymentId;
             });
 
+            $(document).on('click', '.view-Payment', function () {
+                var PaymentId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Payments/Details/' + PaymentId;
+            });
+
         });
 
         function loadPayments() {
@@ -93,8 +121,9 @@
                                 '<td>' + Payment.paymentMethod + '</td>' +
                                 '<td>' + Payment.status +
                                 '<td>' +
-                                '<a class="btn btn-warning edit-Payment" data-id="' + Payment.id + '">Edit</a> ' +
-                                '<button class="btn btn-danger delete-Payment" data-id="' + Payment.id + '">Delete</button>' +
+                                '<a class="btn btn-warning edit-Payment" data-id="' + Payment.id + '">Editar</a> ' +
+                                '<a class="btn btn-info view-Payment" data-id="' + Payment.id + '">Detalles</a> ' +
+                                '<button class="btn btn-danger delete-Payment" data-id="' + Payment.id + '">Eliminar</button>' +
                                 '</td>' +
                                 '</tr>';
                         });

@@ -2,49 +2,36 @@
 @model Visit
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Visita";
 }
 
-<h1>Details</h1>
+<h1 class="text-center text-info">Detalles de la Visita</h1>
 
-<div>
-    <h4>Visit</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            PropertyId
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PropertyId
-        </dd>
-        <dt class="col-sm-2">
-            UserId
-        </dt>
-        <dd class="col-sm-10">
-            @Model.UserId
-        </dd>
-        <dt class="col-sm-2">
-            VisitDate
-        </dt>
-        <dd class="col-sm-10">
-            @Model.VisitDate
-        </dd>
-        <dt class="col-sm-2">
-            Status
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Status
-        </dd>
-        <dt class="col-sm-2">
-            Notes
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Notes
-        </dd>
-        
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h4 class="card-title text-secondary">Información de la Visita</h4>
+            <dl class="row">
+                <dt class="col-sm-3">ID Propiedad</dt>
+                <dd class="col-sm-9">@Model.PropertyId</dd>
+
+                <dt class="col-sm-3">ID Usuario</dt>
+                <dd class="col-sm-9">@Model.UserId</dd>
+
+                <dt class="col-sm-3">Fecha de Visita</dt>
+                <dd class="col-sm-9">@Model.VisitDate.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-3">Estado</dt>
+                <dd class="col-sm-9">@Model.Status</dd>
+
+                <dt class="col-sm-3">Notas</dt>
+                <dd class="col-sm-9">@Model.Notes</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model?.Id">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+    </div>
 </div>

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEase.Persistence.Context;
-using RealEase.Web.ViewsModels;
-
 
 namespace RealEase.Web.Controllers
 {

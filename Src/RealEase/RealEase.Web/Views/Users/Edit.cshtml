@@ -5,56 +5,75 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
+<h1 class="text-center text-success">Editar Usuario</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" id="editUserForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input class="form-control" id="firstNameInput" name="FirstName" value="@Model.FirstName" />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-3">
+                <div class="card-body">
+                    <h4 class="card-title text-secondary">Editar Informacion De Usuario</h4>
+                    <form asp-action="Edit" id="editUserForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="FirstName" class="form-label">Nombres</label>
+                            <input class="form-control" id="firstNameInput" name="FirstName" value="@Model.FirstName" required />
+                        </div>
+
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="LastName" class="form-label">Apellidos</label>
+                            <input class="form-control" id="lastNameInput" name="LastName" value="@Model.LastName" required />
+                        </div>
+
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Correo</label>
+                            <input class="form-control" id="emailInput" name="Email" value="@Model.Email" type="email" required />
+                        </div>
+
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="PhoneNumber" class="form-label">Teléfono</label>
+                            <input class="form-control" id="phoneNumberInput" name="PhoneNumber" value="@Model.PhoneNumber" type="tel" required />
+                        </div>
+
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="PasswordHash" class="form-label">Contraseña</label>
+                            <input class="form-control" type="password" id="passwordHashInput" name="PasswordHash" value="@Model.PasswordHash" required />
+                        </div>
+
+                       
+                        <div class="form-group mb-3">
+                            <label asp-for="Role" class="form-label">Rol</label>
+                            <input class="form-control" id="roleInput" name="Role" value="@Model.Role" placeholder="e.g, Admin" required />
+                        </div>
+
+                        
+                        <div class="form-group form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="isActiveInput" name="IsActive" @(Model.IsActive ? "checked" : "") />
+                            <label class="form-check-label" for="isActiveInput">Is Active</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" id="UpdateUserButton" class="btn btn-success">Guardar Cambios</button>
+                            <a href="/Users" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input class="form-control" id="lastNameInput" name="LastName" value="@Model.LastName" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input class="form-control" id="emailInput" name="Email" value="@Model.Email" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
-                <input class="form-control" id="phoneNumberInput" name="PhoneNumber" value="@Model.PhoneNumber" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PasswordHash"></label>
-                <input class="form-control" type="password" id="passwordHashInput" name="PasswordHash" value="@Model.PasswordHash" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Role"></label>
-                <input class="form-control" id="roleInput" name="Role" value="@Model.Role" placeholder="Ej. Administrador" />
-            </div>
-
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="isActiveInput" name="IsActive" @(Model.IsActive ? "checked" : "") />
-                <label class="form-check-label" for="isActiveInput">Is Active</label>
-            </div>
-
-            <button type="button" id="UpdateUserButton" class="btn btn-primary">Save</button>
-            <a href="/Users" class="btn btn-secondary">Cancel</a>
-        </form>
+        </div>
     </div>
 </div>
+
+
 
 @section Scripts
 {

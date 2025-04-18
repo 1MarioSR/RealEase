@@ -5,93 +5,76 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create User</h1>
-
-<h4>User</h4>
+<h1 class="text-center text-success mb-4">Crear Usuario</h1>
+<h4 class="text-center text-secondary">Por favor ingrese los datos del usuario</h4>
 <hr />
-<div class="row">
-    <div class="col-md-5">
-        <form asp-action="Create">
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> FirstName</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="firstNameInput" />
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> LastName</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="lastNameInput" />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create" class="shadow-sm p-4 bg-light rounded-3">
+
+            <div class="form-group row mb-3">
+                <label for="firstNameInput" class="col-md-4 col-form-label text-md-right text-primary">Primer Nombre</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="firstNameInput" placeholder="Ej. Juan" />
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Email</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="emailInput" />
+            <div class="form-group row mb-3">
+                <label for="lastNameInput" class="col-md-4 col-form-label text-md-right text-primary">Apellido</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="lastNameInput" placeholder="Ej. Pérez" />
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label col-md-5"> PhoneNumber</label>
-                </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="phoneNumberInput" />
+            <div class="form-group row mb-3">
+                <label for="emailInput" class="col-md-4 col-form-label text-md-right text-primary">Correo Electrónico</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="emailInput" placeholder="ejemplo@dominio.com" />
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label col-md-5"> PasswordHash</label>
-                </div>
-                <div class="col-md-6">
-                    <input type="password" class="form-control" id="passwordHashInput" />
+            <div class="form-group row mb-3">
+                <label for="phoneNumberInput" class="col-md-4 col-form-label text-md-right text-primary">Número de Teléfono</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="phoneNumberInput" placeholder="Ej. 123-456-7890" />
                 </div>
             </div>
 
-           <div class="row mb-3">
-               <div class="col-md-2">
-            <label for="roleInput" class="form-label">Role</label>
-                 </div>
-             <div class="col-md-6">
-                 <input class="form-control" id="roleInput" list="roles" placeholder="Ej. Administrador" />
+            <div class="form-group row mb-3">
+                <label for="passwordHashInput" class="col-md-4 col-form-label text-md-right text-primary">Contraseña</label>
+                <div class="col-md-8">
+                    <input type="password" class="form-control" id="passwordHashInput" placeholder="********" />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="roleInput" class="col-md-4 col-form-label text-md-right text-primary">Rol</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="roleInput" list="roles" placeholder="Ej. Administrador" />
                     <datalist id="roles">
                         <option value="Administrador" />
                         <option value="Agente de ventas" />
                         <option value="Dueño" />
                         <option value="Cliente" />
                     </datalist>
-             </div>
-           </div>
-
-            <div class="check">
-                <div class="col-md-2">
-                    <label class="form-check-label" for="isActiveInput">IsActive</label>
                 </div>
-                <div class="col-md-2">
+            </div>
+
+            <div class="form-group row mb-3">
+                <label for="isActiveInput" class="col-md-4 col-form-label text-md-right text-primary">¿Está activo?</label>
+                <div class="col-md-8">
                     <input type="checkbox" class="form-check-input" id="isActiveInput" />
                 </div>
             </div>
 
-            
-
+            <div class="form-group text-center">
+                <button type="submit" id="addUserButton" class="btn btn-success btn-lg">Guardar</button>
+                <a href="/Users" class="btn btn-secondary btn-lg">Cancelar</a>
+            </div>
         </form>
     </div>
 </div>
-
-<button id="addUserButton" class="btn btn-primary">
-    Save
-</button>
-<a href="/Users" class="btn btn-secondary"> Cancel</a>
     
 
 @section Scripts {

@@ -2,78 +2,67 @@
 @model Visit
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Visita";
 }
 
-<h1>Create Visit</h1>
+<h1 class="text-center text-info">Crear Visita</h1>
 
-<h4>Visit</h4>
-<hr />
-<div class="row">
-    <div class="col-md-5">
-        <form asp-action="Create">
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> PropertyId</label>
-                </div>
-                <div class="col-md-6">
-                    <input type="number" step="1" class="form-control" id="propertyIdInput" />
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> UserId</label>
-                </div>
-                <div class="col-md-6">
-                    <input type="number" step="1" class="form-control" id="userIdInput" />
-                </div>
-            </div>
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h4 class="card-title text-secondary">Información de la Visita</h4>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> VisitDate</label>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">ID Propiedad</label>
+                    <div class="col-md-6">
+                        <input type="number" step="1" class="form-control" id="propertyIdInput" name="PropertyId" />
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <input type="date" class="form-control" id="visitDateInput" />
-                </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-md-2">
-                    <label class="form-label"> Status</label>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">ID Usuario</label>
+                    <div class="col-md-6">
+                        <input type="number" step="1" class="form-control" id="userIdInput" name="UserId" />
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <input class="form-control" id="statusInput" list="status" placeholder="Ej. Disponible" />
-                    <datalist id="status">
-                        <option value="Pendiente" />
-                        <option value="Disponible" />
-                        <option value="Vendido" />
-                    </datalist>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label col-md-5"> Notes</label>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Fecha de Visita</label>
+                    <div class="col-md-6">
+                        <input type="date" class="form-control" id="visitDateInput" name="VisitDate" />
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <input  class="form-control" id="notesInput" />
+
+                <div class="form-group row mb-3">
+                    <label class="col-md-3 col-form-label">Estado</label>
+                    <div class="col-md-6">
+                        <input class="form-control" id="statusInput" name="Status" list="status" placeholder="Ej. Disponible" />
+                        <datalist id="status">
+                            <option value="Pendiente" />
+                            <option value="Disponible" />
+                            <option value="Vendido" />
+                        </datalist>
+                    </div>
                 </div>
-            </div>
 
-            
-            
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Notas</label>
+                    <div class="col-md-6">
+                        <input class="form-control" id="notesInput" name="Notes" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        </form>
+    <div class="mt-4 d-flex justify-content-between">
+        <button id="addVisitButton" class="btn btn-primary">Guardar</button>
+        <a href="/Visits" class="btn btn-secondary">Cancelar</a>
     </div>
 </div>
 
-<button id="addVisitButton" class="btn btn-primary">
-    Save
-</button>
-<a href="/Visits" class="btn btn-secondary"> Cancel</a>
     
 
 @section Scripts {

@@ -2,49 +2,59 @@
 @model Visit
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Visita";
 }
 
-<h1>Edit</h1>
-
+<h1 class="text-center text-success">Editar Visita</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" id="editVisitForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id" />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-3">
+                <div class="card-body">
+                    <h4 class="card-title text-secondary">Detalles de la Visita</h4>
+                    <form asp-action="Edit" id="editVisitForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="PropertyId"></label>
-                <input type="number" step="1" class="form-control" id="propertyIdInput" name="propertyId" value="@Model.PropertyId" />
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PropertyId" class="form-label">ID Propiedad</label>
+                            <input type="number" step="1" class="form-control" id="propertyIdInput" name="PropertyId" value="@Model.PropertyId" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UserId" class="form-label">ID Usuario</label>
+                            <input type="number" step="1" class="form-control" id="userIdInput" name="UserId" value="@Model.UserId" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="VisitDate" class="form-label">Fecha de Visita</label>
+                            <input type="date" class="form-control" id="visitDateInput" name="VisitDate" value="@Model.VisitDate.ToString("yyyy-MM-dd")" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Status" class="form-label">Estado</label>
+                            <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder="Ej. Disponible" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Notes" class="form-label">Notas</label>
+                            <input class="form-control" id="notesInput" name="Notes" value="@Model.Notes" />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" id="UpdateVisitButton" class="btn btn-primary">Guardar</button>
+                            <a href="/Visits" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="UserId"></label>
-                <input type="number" step="1" class="form-control" id="userIdInput" name="propertyId" value="@Model.UserId" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="VisitDate"></label>
-                <input type="date" class="form-control" id="visitDateInput" name="VisitDate" value="@Model.VisitDate.ToString("yyyy-MM-dd")"  />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Status"></label>
-                <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder=" Ej. Disponible" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Notes"></label>
-                <input class="form-control" id="notesInput" name="Notes" value="@Model.Notes"/>
-            </div>
-
-            <button type="button" id="UpdateVisitButton" class="btn btn-primary">Save</button>
-            <a href="/Visits" class="btn btn-secondary">Cancel</a>
-        </form>
+        </div>
     </div>
 </div>
+
 
 @section Scripts
 {

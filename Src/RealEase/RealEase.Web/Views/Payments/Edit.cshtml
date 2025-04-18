@@ -5,51 +5,61 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
+<h1 class="text-center text-success">Editar Pago</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" id="editPaymentForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id" />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-3">
+                <div class="card-body">
+                    <h4 class="card-title text-secondary">Editar Información Del Pago</h4>
+                    <form asp-action="Edit" id="editPaymentForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="ContractId"></label>
-                <input type="number" step="1" class="form-control" id="contractIdInput" name="contractId" value="@Model.ContractId" />
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ContractId" class="form-label">Contrato ID</label>
+                            <input type="number" step="1" class="form-control" id="contractIdInput" name="contractId" value="@Model.ContractId" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TenantId" class="form-label">Inquilino ID</label>
+                            <input type="number" step="1" class="form-control" id="tenantIdInput" name="tenantId" value="@Model.TenantId" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PaymentDate" class="form-label">Fecha de Pago</label>
+                            <input type="date" class="form-control" id="paymentDateInput" name="PaymentDate" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Amount" class="form-label">Monto</label>
+                            <input class="form-control" id="amountInput" name="Amount" value="@Model.Amount" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PaymentMethod" class="form-label">Método de Pago</label>
+                            <input class="form-control" id="paymentMethodInput" name="PaymentMethod" value="@Model.PaymentMethod" placeholder="Ej. Tarjeta de Crédito" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Status" class="form-label">Estado</label>
+                            <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder="Ej. Procesado" required />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" id="UpdatePaymentButton" class="btn btn-success">Guardar Cambios</button>
+                            <a href="/Payments" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="TenantId"></label>
-                <input type="number" step="1" class="form-control" id="tenantIdInput" name="tenantId" value="@Model.TenantId" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PaymentDate"></label>
-                <input type="date" class="form-control" id="paymentDateInput" name="PaymentDate" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Amount"></label>
-                <input class="form-control" id="amountInput" name="Amount" value="@Model.Amount" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PaymentMethod"></label>
-                <input class="form-control" id="paymentMethodInput" name="PaymentMethod" value="@Model.PaymentMethod" placeholder="Ej. Tarjeta De Credito" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Status"></label>
-                <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder=" Ej. Disponible" />
-            </div>
-
-            <button type="button" id="UpdatePaymentButton" class="btn btn-primary">Save</button>
-            <a href="/Payments" class="btn btn-secondary">Cancel</a>
-        </form>
+        </div>
     </div>
 </div>
+
 
 @section Scripts
 {

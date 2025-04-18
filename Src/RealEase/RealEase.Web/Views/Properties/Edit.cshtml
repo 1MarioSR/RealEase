@@ -5,63 +5,80 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
+<h1 class="text-center text-info mb-4">Editar Propiedad</h1>
+<h4 class="text-center text-secondary">Modifica la información de la propiedad</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" id="editPropertieForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <form asp-action="Edit" id="editPropertieForm" class="shadow-sm p-4 bg-light rounded-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="Title"></label>
-                <input class="form-control" id="titleInput" name="Title" value="@Model.Title" />
+            <div class="form-group row mb-3">
+                <label for="titleInput" class="col-md-3 col-form-label text-md-right text-primary">Título</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="titleInput" name="Title" value="@Model.Title" placeholder="Ej. Casa en venta" />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Image"></label>
-                <input class="form-control" type="url" id="imageInput" name="Image" value="@Model.Image" />
+            <div class="form-group row mb-3">
+                <label for="imageInput" class="col-md-3 col-form-label text-md-right text-primary">Imagen (URL)</label>
+                <div class="col-md-9">
+                    <input class="form-control" type="url" id="imageInput" name="Image" value="@Model.Image" placeholder="https://..." />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Description"></label>
-                <input class="form-control" id="descriptionInput" name="Description" value="@Model.Description" />
+            <div class="form-group row mb-3">
+                <label for="descriptionInput" class="col-md-3 col-form-label text-md-right text-primary">Descripción</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="descriptionInput" name="Description" value="@Model.Description" placeholder="Breve descripción..." />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Address"></label>
-                <input class="form-control" id="addressInput" name="Address" value="@Model.Address" />
+            <div class="form-group row mb-3">
+                <label for="addressInput" class="col-md-3 col-form-label text-md-right text-primary">Dirección</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="addressInput" name="Address" value="@Model.Address" placeholder="Ej. Calle Principal #123" />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Price"></label>
-                <input class="form-control" id="priceInput" name="Price" value="@Model.Price" />
+            <div class="form-group row mb-3">
+                <label for="priceInput" class="col-md-3 col-form-label text-md-right text-primary">Precio</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="priceInput" name="Price" value="@Model.Price" placeholder="Ej. 250000.00" />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="PropertyType"></label>
-                <input class="form-control" id="propertyTypeInput" name="PropertyType" value="@Model.PropertyType"/>
+            <div class="form-group row mb-3">
+                <label for="propertyTypeInput" class="col-md-3 col-form-label text-md-right text-primary">Tipo</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="propertyTypeInput" name="PropertyType" value="@Model.PropertyType" placeholder="Ej. Apartamento, Casa, Solar..." />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Status"></label>
-                <input class="form-control" id="statusInput" name="Status" value="@Model.Status"  placeholder=" Ej. Disponible" />
+            <div class="form-group row mb-3">
+                <label for="statusInput" class="col-md-3 col-form-label text-md-right text-primary">Estado</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder="Ej. Disponible, Vendido..." />
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="OwnerId"></label>
-                <input type="number" step="1" class="form-control" id="ownerIdInput" name="OwnerId" value="@Model.OwnerId" />
+            <div class="form-group row mb-4">
+                <label for="ownerIdInput" class="col-md-3 col-form-label text-md-right text-primary">ID del Dueño</label>
+                <div class="col-md-9">
+                    <input type="number" step="1" class="form-control" id="ownerIdInput" name="OwnerId" value="@Model.OwnerId" placeholder="Ej. 102" />
+                </div>
             </div>
 
-            
-
-            <button type="button" id="UpdatePropertieButton" class="btn btn-primary">Save</button>
-            <a href="/Properties" class="btn btn-secondary">Cancel</a>
+            <div class="form-group text-center">
+                <button type="button" id="UpdatePropertieButton" class="btn btn-info btn-lg">Guardar Cambios</button>
+                <a href="/Properties" class="btn btn-secondary btn-lg">Cancelar</a>
+            </div>
         </form>
     </div>
 </div>
+
 
 @section Scripts
 {

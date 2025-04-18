@@ -2,59 +2,78 @@
 @model Contract
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Contrato";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center text-info">Editar Contrato</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" id="editContractForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h4 class="card-title text-secondary">Detalles del Contrato</h4>
+            <form asp-action="Edit" id="editContractForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="ClientId"></label>
-                <input type="number" step="1" class="form-control" id="clientIdInput" name="ClientId" value="@Model.ClientId" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">ID Cliente</label>
+                    <div class="col-md-6">
+                        <input type="number" step="1" class="form-control" id="clientIdInput" name="ClientId" value="@Model.ClientId" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="AgentId"></label>
-                <input type="number" step="1" class="form-control" id="agentIdInput" name="AgentId" value="@Model.AgentId" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">ID Agente</label>
+                    <div class="col-md-6">
+                        <input type="number" step="1" class="form-control" id="agentIdInput" name="AgentId" value="@Model.AgentId" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="PropertyId"></label>
-                <input type="number" step="1" class="form-control" id="propertyIdInput" name="PropertyId" value="@Model.PropertyId" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">ID Propiedad</label>
+                    <div class="col-md-6">
+                        <input type="number" step="1" class="form-control" id="propertyIdInput" name="PropertyId" value="@Model.PropertyId" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="StartDate"></label>
-                <input type="date" class="form-control" id="startDateInput" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Fecha de Inicio</label>
+                    <div class="col-md-6">
+                        <input type="date" class="form-control" id="startDateInput" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="EndDate"></label>
-                <input type="date" class="form-control" id="endDateInput" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Fecha de Finalización</label>
+                    <div class="col-md-6">
+                        <input type="date" class="form-control" id="endDateInput" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="MonthlyAmount"></label>
-                <input class="form-control" id="monthlyAmountInput" name="MonthlyAmount" value="@Model.MonthlyAmount" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Monto Mensual</label>
+                    <div class="col-md-6">
+                        <input class="form-control" id="monthlyAmountInput" name="MonthlyAmount" value="@Model.MonthlyAmount" />
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Status"></label>
-                <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder=" Ej. Disponible" />
-            </div>
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Estado</label>
+                    <div class="col-md-6">
+                        <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder="Ej. Disponible" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            <button type="button" id="UpdateContractButton" class="btn btn-primary">Save</button>
-            <a href="/Contracts" class="btn btn-secondary">Cancel</a>
-        </form>
+    <div class="mt-4 d-flex justify-content-between">
+        <button type="button" id="UpdateContractButton" class="btn btn-primary">Guardar</button>
+        <a href="/Contracts" class="btn btn-secondary">Cancelar</a>
     </div>
 </div>
+
 
 @section Scripts
 {

@@ -5,57 +5,66 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center text-success mb-4">Detalles del Usuario</h1>
+<hr />
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            FirstName
-        </dt>
-        <dd class="col-sm-10">
-            @Model.FirstName
-        </dd>
-        <dt class="col-sm-2">
-            Last Name
-        </dt>
-        <dd class="col-sm-10">
-            @Model.LastName
-        </dd>
-        <dt class="col-sm-2">
-            Email
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Email
-        </dd>
-        <dt class="col-sm-2">
-            Phone Number
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PhoneNumber
-        </dd>
-        <dt class="col-sm-2">
-            Password Hash
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PasswordHash
-        </dd>
-        <dt class="col-sm-2">
-            Role
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Role
-        </dd>
-        <dt class="col-sm-2">
-            Is Active?
-        </dt>
-        <dd class="col-sm-10">
-            @Model.IsActive
-        </dd>
-    </dl>
+<div class="card shadow-sm border-0">
+    <div class="card-body bg-white rounded-3">
+        <h4 class="text-secondary">Información del Usuario</h4>
+        <dl class="row">
+            <dt class="col-sm-3 text-primary">
+                Nombres
+            </dt>
+            <dd class="col-sm-9">
+                @Model.FirstName
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                Apellidos
+            </dt>
+            <dd class="col-sm-9">
+                @Model.LastName
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                Correo Electrónico
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Email
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                Teléfono
+            </dt>
+            <dd class="col-sm-9">
+                @Model.PhoneNumber
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                Contraseña (Hash)
+            </dt>
+            <dd class="col-sm-9">
+                @Model.PasswordHash
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                Rol
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Role
+            </dd>
+
+            <dt class="col-sm-3 text-primary">
+                ¿Está Activo?
+            </dt>
+            <dd class="col-sm-9">
+                @Model.IsActive 
+            </dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+<div class="mt-3">
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
 </div>

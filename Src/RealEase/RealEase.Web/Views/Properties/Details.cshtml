@@ -2,67 +2,49 @@
 @model Propertie
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Propiedad";
 }
 
-<h1>Details</h1>
+<h1 class="text-center text-info mb-4">Detalles de la Propiedad</h1>
+<h5 class="text-center text-muted mb-4">Consulta la información de la propiedad seleccionada</h5>
 
-<div>
-    <h4>Propertie</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Title
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Title
-        </dd>
-        <dt class="col-sm-2">
-            Image
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Image
-        </dd>
-        <dt class="col-sm-2">
-            Last Description
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Description
-        </dd>
-        <dt class="col-sm-2">
-            Address
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Address
-        </dd>
-        <dt class="col-sm-2">
-            Price
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Price
-        </dd>
-        <dt class="col-sm-2">
-            Property Type
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PropertyType
-        </dd>
-        <dt class="col-sm-2">
-            Status
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Status
-        </dd>
-        <dt class="col-sm-2">
-            OwnerId
-        </dt>
-        <dd class="col-sm-10">
-            @Model.OwnerId
-        </dd>
-        
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm p-4 bg-light rounded-3">
+            <dl class="row">
+                <dt class="col-sm-4 text-primary">Título</dt>
+                <dd class="col-sm-8">@Model.Title</dd>
+
+                <dt class="col-sm-4 text-primary">Imagen</dt>
+                <dd class="col-sm-8">
+                    <img src="@Model.Image" alt="Imagen de la propiedad" class="img-fluid rounded" style="max-height: 300px;" />
+                    <br />
+                    <small class="text-muted">@Model.Image</small>
+                </dd>
+
+                <dt class="col-sm-4 text-primary">Descripción</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+
+                <dt class="col-sm-4 text-primary">Dirección</dt>
+                <dd class="col-sm-8">@Model.Address</dd>
+
+                <dt class="col-sm-4 text-primary">Precio</dt>
+                <dd class="col-sm-8">$@Model.Price.ToString("C")</dd>
+
+                <dt class="col-sm-4 text-primary">Tipo de Propiedad</dt>
+                <dd class="col-sm-8">@Model.PropertyType</dd>
+
+                <dt class="col-sm-4 text-primary">Estado</dt>
+                <dd class="col-sm-8">@Model.Status</dd>
+
+                <dt class="col-sm-4 text-primary">ID del Dueño</dt>
+                <dd class="col-sm-8">@Model.OwnerId</dd>
+            </dl>
+
+            <div class="text-center mt-4">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-primary me-2">Editar</a>
+                <a asp-action="Index" class="btn btn-outline-secondary">Volver a la lista</a>
+            </div>
+        </div>
+    </div>
 </div>

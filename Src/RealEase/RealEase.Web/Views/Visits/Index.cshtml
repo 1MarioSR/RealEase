@@ -7,36 +7,57 @@
 
 }
 
+<style>
+    body {
+        background-color: #f5f5dc; 
+    }
 
+    .btn-green {
+        background-color: #4CAF50;
+        color: white;
+    }
 
-    <h2 class="text-primary">All Visits</h2>
-    <a class="btn btn-primary" id="addVisitButton" > Add </a>
-        
-   
+        .btn-green:hover {
+            background-color: #45a049;
+        }
 
-<div class="card shadow-sm">
-    <div class="card-body">
-        <h4 class="text-secondary">All Visits</h4>
-        <table class="table table-striped table-hover text-center">
-            <thead class="table-dark">
+    .table-custom th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .text-green {
+        color: #4CAF50;
+    }
+</style>
+
+<h2 class="text-green mb-4">Visitas Agendadas</h2>
+
+<a class="btn btn-green mb-3" id="addVisitButton">📅 Agendar Visita</a>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body bg-white rounded-3">
+        <h4 class="text-secondary">Listado de Visitas</h4>
+        <table class="table table-hover text-center table-bordered table-custom">
+            <thead>
                 <tr>
                     <th>Id</th>
-                    <th>PropertyId</th>
-                    <th>UserId</th>
-                    <th>VisitDate</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                    <th>Actions</th>
+                    <th>ID Propiedad</th>
+                    <th>ID Usuario</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Notas</th>
+                    <th>Acciones</th>
                 </tr>
+            </thead>
             <tbody id="VisitsTableBody">
                 <tr>
-                    <td colspan="7">No Records found</td>
+                    <td colspan="7">No se encontraron registros</td>
                 </tr>
-            </tbody>    
-            </table>
+            </tbody>
+        </table>
     </div>
-</div> 
-
+</div>
 
 
 
@@ -73,6 +94,11 @@
                 window.location.href = 'https://localhost:7146/Visits/Edit/' + VisitId;
             });
 
+            $(document).on('click', '.view-Visit', function () {
+                var VisitId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Visits/Details/' + VisitId;
+            });
+
         });
 
         function loadVisits() {
@@ -93,8 +119,9 @@
                                 '<td>' + Visit.status + '</td>' +
                                 '<td>' + Visit.notes +
                                 '<td>' +
-                                '<a class="btn btn-warning edit-Visit" data-id="' + Visit.id + '">Edit</a> ' +
-                                '<button class="btn btn-danger delete-Visit" data-id="' + Visit.id + '">Delete</button>' +
+                                '<a class="btn btn-warning edit-Visit" data-id="' + Visit.id + '">Editar</a> ' +
+                                '<a class="btn btn-info view-Visit" data-id="' + Visit.id + '">Detalles</a> ' +
+                                '<button class="btn btn-danger delete-Visit" data-id="' + Visit.id + '">Eliminar</button>' +
                                 '</td>' +
                                 '</tr>';
                         });
