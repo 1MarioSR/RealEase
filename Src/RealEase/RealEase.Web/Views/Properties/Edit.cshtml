@@ -10,65 +10,71 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="editPropertieForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" id="id" value="@Model.Id" />
+
+            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label for="titleInput">Title</label>
-                <input class="form-control" id="titleInput" value="@Model.Title" />
+                <label asp-for="Title"></label>
+                <input class="form-control" id="titleInput" name="Title" value="@Model.Title" />
             </div>
 
             <div class="form-group">
-                <label for="imageInput">Image</label>
-                <input type= "url"class="form-control" id="imageInput" value="@Model.Image" />
+                <label asp-for="Image"></label>
+                <input class="form-control" type="url" id="imageInput" name="Image" value="@Model.Image" />
             </div>
 
             <div class="form-group">
-                <label for="descriptionInput">Description</label>
-                <input class="form-control" id="descriptionInput" value="@Model.Description" />
-            </div> 
-            <div class="form-group ">
-                <label for="addressInput">Address</label>
-                <input class="form-control" id="addressInput" value="@Model.Address" />
-            </div>
-            <div class="form-group ">
-                <label for="priceInput">Price</label>
-                <input class="form-control" id="priceInput" value="@Model.Price" />
-            </div>
-            <div class="form-group ">
-                <label for="propertyTypeInput">PropertyType</label>
-                <input class="form-control" id="propertyTypeInput" value="@Model.PropertyType" />
-            </div>
-            <div class="form-group ">
-                <label for="statusInput">Status</label>
-                <input class="form-control" id="statusInput" placeholder="Ej. Disponible" value="@Model.Status" />
-            </div>
-            <div class="form-group">
-                <label for="ownerIdInput">OwnerId</label>
-                <input type="number" step="1" class="form-control" id="ownerIdInput" name="Owner_id" value="@Model.OwnerId" />
+                <label asp-for="Description"></label>
+                <input class="form-control" id="descriptionInput" name="Description" value="@Model.Description" />
             </div>
 
-          
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input class="form-control" id="addressInput" name="Address" value="@Model.Address" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input class="form-control" id="priceInput" name="Price" value="@Model.Price" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PropertyType"></label>
+                <input class="form-control" id="propertyTypeInput" name="PropertyType" value="@Model.PropertyType"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status"></label>
+                <input class="form-control" id="statusInput" name="Status" value="@Model.Status"  placeholder=" Ej. Disponible" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="OwnerId"></label>
+                <input type="number" step="1" class="form-control" id="ownerIdInput" name="OwnerId" value="@Model.OwnerId" />
+            </div>
+
+            
+
             <button type="button" id="UpdatePropertieButton" class="btn btn-primary">Save</button>
             <a href="/Properties" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>
 
-
-
 @section Scripts
 {
-
     <script>
         $(document).ready(function () {
             $('#UpdatePropertieButton').click(function (e) {
                 e.preventDefault();
-                 var PropertieId = $('#id').val();
-                // var url = window.location.pathname;
-                // var PropertieId = url.substring(url.lastIndexOf('/') + 1);
-                //const PropertieId = url.split('/').pop();
+                var propertieId = $('input[name="Id"]').val();
+
+                console.log('Propertie ID:', propertieId);
+
                 var updatedPropertie = {
+                    Id: propertieId,
                     Title: $('#titleInput').val(),
                     Image: $('#imageInput').val(),
                     Description: $('#descriptionInput').val(),
@@ -77,11 +83,10 @@
                     PropertyType: $('#propertyTypeInput').val(),
                     Status: $('#statusInput').val(),
                     OwnerId: $('#ownerIdInput').val()
-                    
                 };
 
                 $.ajax({
-                    url: 'https://localhost:7012/Propertie/UpdatePropertie/' + PropertieId,
+                    url: 'https://localhost:7012/Propertie/UpdatePropertie/' + propertieId,
                     type: 'PUT',
                     contentType: 'application/json',
                     data: JSON.stringify(updatedPropertie),
@@ -91,12 +96,10 @@
                     },
                     error: function (error) {
                         console.log('Error:', error);
+                        alert('An error occurred while updating the propertie.');
                     }
                 });
             });
         });
     </script>
-
-
 }
-

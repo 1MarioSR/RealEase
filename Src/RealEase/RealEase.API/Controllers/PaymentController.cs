@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEase.API.Requests;
-using RealEase.API.Responses;
-using RealEase.Domain.Entities;
-using RealEase.Infrastructure.Interfaces;
+using RealEase.Application.Dtos.Payment;
+using RealEase.Application.Services;
 
 namespace RealEase.API.Controllers
 {
@@ -10,30 +8,31 @@ namespace RealEase.API.Controllers
     [Route("[controller]")]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentRepository _paymentRepository;
+        private readonly PaymentService _paymentService;
 
-        public PaymentController(IPaymentRepository paymentRepository)
+        public PaymentController(PaymentService paymentService)
         {
-            _paymentRepository = paymentRepository;
+            _paymentService = paymentService;
         }
 
         [HttpGet("GetPayments")]
         public async Task<IActionResult> GetAllPayments()
         {
-            var payments = await _paymentRepository.GetAllAsync();
+            var payments = await _paymentService.GetAllPaymentsAsync(string.Empty);
             return Ok(payments);
         }
 
         [HttpGet("GetPayment/{id}")]
-        public async Task<ActionResult<Payment>> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            var payment = await _paymentRepository.GetByIdAsync(id);
+            var payment = await _paymentService.GetPaymentByIdAsync(id);
             if (payment == null) return NotFound(new { message = "Pago no encontrado." });
 
             var paymentResponse = new
             {
+                payment.Id,
                 payment.ContractId,
                 payment.TenantId,
                 payment.PaymentDate,
@@ -46,52 +45,44 @@ namespace RealEase.API.Controllers
         }
 
         [HttpPost("AddPayment")]
-        public async Task<ActionResult<NewPaymentResponse>> AddPayment(NewPaymentRequest request)
+        public async Task<IActionResult> AddPayment(PaymentDto request)
         {
-            var payment = new Payment
-            {
-                ContractId = request.ContractId,
-                TenantId = request.TenantId,
-                PaymentDate = request.PaymentDate,
-                Amount = request.Amount,
-                PaymentMethod = request.PaymentMethod,
-                Status = request.Status
-            };
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var newPayment = await _paymentRepository.CreateAsync(payment);
+            var paymentId = await _paymentService.AddPaymentAsync(request);
+            if (paymentId == 0)
+                return StatusCode(500, "No se pudo crear el pago.");
 
-            return Ok(new NewPaymentResponse { Id = newPayment.Id });
+            return Ok(new { Id = paymentId });
         }
 
         [HttpPut("UpdatePayment/{id}")]
-        public async Task<ActionResult<NewPaymentResponse>> UpdatePayment(int id, NewPaymentRequest request)
+        public async Task<IActionResult> UpdatePayment(int id, PaymentDto request)
         {
             if (id <= 0) return BadRequest("El ID debe ser válido.");
 
-            var existingPayment = await _paymentRepository.GetByIdAsync(id);
+            // Asignar el ID de la ruta al objeto request directamente
+            request.Id = id;
+
+            var existingPayment = await _paymentService.GetPaymentByIdAsync(id);
             if (existingPayment == null) return NotFound("Pago no encontrado.");
 
-            existingPayment.ContractId = request.ContractId;
-            existingPayment.TenantId = request.TenantId;
-            existingPayment.PaymentDate = request.PaymentDate;
-            existingPayment.Amount = request.Amount;
-            existingPayment.PaymentMethod = request.PaymentMethod;
-            existingPayment.Status = request.Status;
+            var updated = await _paymentService.UpdatePaymentAsync(request);
+            if (!updated) return StatusCode(500, "No se pudo actualizar el pago.");
 
-            var updatedPayment = await _paymentRepository.UpdateAsync(existingPayment);
-
-            return Ok(new NewPaymentResponse { Id = updatedPayment.Id });
+            return Ok(new { Id = id, message = "Pago actualizado exitosamente." });
         }
 
         [HttpDelete("DeletePayment/{id}")]
-        public async Task<ActionResult> DeletePayment(int id)
+        public async Task<IActionResult> DeletePayment(int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            var existingPayment = await _paymentRepository.GetByIdAsync(id);
+            var existingPayment = await _paymentService.GetPaymentByIdAsync(id);
             if (existingPayment == null) return NotFound("Pago no encontrado.");
 
-            var deleted = await _paymentRepository.DeleteAsync(id);
+            var deleted = await _paymentService.DeletePaymentAsync(id);
             if (!deleted) return StatusCode(500, "No se pudo eliminar el pago.");
 
             return Ok(new { message = "Pago eliminado exitosamente." });

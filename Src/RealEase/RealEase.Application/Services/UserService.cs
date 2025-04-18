@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RealEase.Application.Dtos.User;
 using RealEase.Domain.Entities;
+using Umbraco.Core.Services;
 
 namespace RealEase.Application.Services
 {
-    public class UserService
+    public class UserService 
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly UserRepository _userRepository;
@@ -20,7 +21,7 @@ namespace RealEase.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync()
+        public async Task<List<UserDto>> GetAllUsersAsync(string filter)
         {
             var users = await _userRepository.GetAllAsync();
 
@@ -43,7 +44,7 @@ namespace RealEase.Application.Services
             return userDtos;
         }
 
-        public async Task<UserDto> GetUserByIdAsync(int id)
+        public async Task<UserDto?> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return null;
@@ -136,7 +137,7 @@ namespace RealEase.Application.Services
                     return false;
                 }
 
-                await _userRepository.DeleteAsync(id); // Pass the id instead of the user object
+                await _userRepository.DeleteAsync(id); 
                 await _unitOfWork.CompleteAsync();
                 await _unitOfWork.CommitTransactionAsync();
                 return true;
@@ -147,5 +148,20 @@ namespace RealEase.Application.Services
                 return false;
             }
         }
+
+        //public object GetUserById(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public async Task GetUserAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public async Task<int> CreateUserAsync(UserDto dto)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

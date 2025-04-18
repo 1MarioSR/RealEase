@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEase.API.Requests;
-using RealEase.API.Responses;
-using RealEase.Domain.Entities;
-using RealEase.Infrastructure.Interfaces;
+using RealEase.Application.Dtos.Contract;
+using RealEase.Application.Services;
 
 namespace RealEase.API.Controllers
 {
@@ -10,30 +8,31 @@ namespace RealEase.API.Controllers
     [Route("[controller]")]
     public class ContractController : ControllerBase
     {
-        private readonly IContractRepository _contractRepository;
-
-        public ContractController(IContractRepository contractRepository)
+        private readonly ContractService _contractService;
+        
+        public ContractController(ContractService contractService)
         {
-            _contractRepository = contractRepository;
+            _contractService = contractService;
         }
 
         [HttpGet("GetContracts")]
         public async Task<IActionResult> GetAllContracts()
         {
-            var contracts = await _contractRepository.GetAllAsync();
+            var contracts = await _contractService.GetAllContractsAsync();
             return Ok(contracts);
         }
 
         [HttpGet("GetContract/{id}")]
-        public async Task<ActionResult<Contract>> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
-
-            var contract = await _contractRepository.GetByIdAsync(id);
+            
+            var contract = await _contractService.GetContractByIdAsync(id);
             if (contract == null) return NotFound(new { message = "Contrato no encontrado." });
-
+            
             var contractResponse = new
             {
+                contract.Id,
                 contract.ClientId,
                 contract.AgentId,
                 contract.PropertyId,
@@ -42,61 +41,49 @@ namespace RealEase.API.Controllers
                 contract.MonthlyAmount,
                 contract.Status
             };
-
+            
             return Ok(contractResponse);
         }
-
+        
         [HttpPost("AddContract")]
-        public async Task<ActionResult<NewContractResponse>> AddContract(NewContractRequest request)
+        public async Task<IActionResult> AddContract(ContractDto request)
         {
-            var contract = new Contract
-            {
-                ClientId = request.ClientId,
-                AgentId = request.AgentId,
-                PropertyId = request.PropertyId,
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
-                MonthlyAmount = request.MonthlyAmount,
-                Status = request.Status
-            };
-
-            var newContract = await _contractRepository.CreateAsync(contract);
-
-            return Ok(new NewContractResponse { Id = newContract.Id });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+                
+            var contractId = await _contractService.AddContractAsync(request);
+            if (contractId == 0)
+                return StatusCode(500, "No se pudo crear el contrato.");
+                
+            return Ok(new { Id = contractId });
         }
-
+        
         [HttpPut("UpdateContract/{id}")]
-        public async Task<ActionResult<NewContractResponse>> UpdateContract(int id, NewContractRequest request)
+        public async Task<IActionResult> UpdateContract(int id, ContractDto request)
         {
             if (id <= 0) return BadRequest("El ID debe ser válido.");
-
-            var existingContract = await _contractRepository.GetByIdAsync(id);
+            if (id != request.Id) return BadRequest("El ID de ruta y el ID del contrato no coinciden.");
+            
+            var existingContract = await _contractService.GetContractByIdAsync(id);
             if (existingContract == null) return NotFound("Contrato no encontrado.");
-
-            existingContract.ClientId = request.ClientId;
-            existingContract.AgentId = request.AgentId;
-            existingContract.PropertyId = request.PropertyId;
-            existingContract.StartDate = request.StartDate;
-            existingContract.EndDate = request.EndDate;
-            existingContract.MonthlyAmount = request.MonthlyAmount;
-            existingContract.Status = request.Status;
-
-            var updatedContract = await _contractRepository.UpdateAsync(existingContract);
-
-            return Ok(new NewContractResponse { Id = updatedContract.Id });
+            
+            var updated = await _contractService.UpdateContractAsync(request);
+            if (!updated) return StatusCode(500, "No se pudo actualizar el contrato.");
+            
+            return Ok(new { Id = id, message = "Contrato actualizado exitosamente." });
         }
-
+        
         [HttpDelete("DeleteContract/{id}")]
-        public async Task<ActionResult> DeleteContract(int id)
+        public async Task<IActionResult> DeleteContract(int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
-
-            var existingContract = await _contractRepository.GetByIdAsync(id);
+            
+            var existingContract = await _contractService.GetContractByIdAsync(id);
             if (existingContract == null) return NotFound("Contrato no encontrado.");
-
-            var deleted = await _contractRepository.DeleteAsync(id);
+            
+            var deleted = await _contractService.DeleteContractAsync(id);
             if (!deleted) return StatusCode(500, "No se pudo eliminar el contrato.");
-
+            
             return Ok(new { message = "Contrato eliminado exitosamente." });
         }
     }

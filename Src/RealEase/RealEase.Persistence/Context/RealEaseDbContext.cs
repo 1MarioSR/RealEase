@@ -94,7 +94,7 @@ namespace RealEase.Persistence.Context
             );
         }
 
-        }
-
     }
+
+}
 

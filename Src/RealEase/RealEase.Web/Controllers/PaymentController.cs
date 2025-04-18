@@ -1,8 +1,6 @@
-﻿using RealEase.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEase.Persistence.Context;
-using RealEase.Domain.Entities;
+using RealEase.Web.ViewsModels;
 
 
 namespace RealEase.Web.Controllers
@@ -11,7 +9,6 @@ namespace RealEase.Web.Controllers
     {
         private readonly RealEaseDbContext _context;
 
-
         public PaymentsController(RealEaseDbContext context)
         {
             _context = context;
@@ -19,13 +16,17 @@ namespace RealEase.Web.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
         public IActionResult Details(int id)
         {
-            ViewBag.PaymentId = id;
-            return View();
+            var payment = _context.Payments.FirstOrDefault(u => u.Id == id);
+            if (payment == null)
+                return NotFound();
+
+            return View(payment);
         }
 
         [HttpGet]
@@ -34,16 +35,24 @@ namespace RealEase.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.PaymentId = id;
-            return View();
+            var payment = _context.Payments.FirstOrDefault(u => u.Id == id);
+            if (payment == null)
+                return NotFound();
+
+            return View(payment);
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            ViewBag.PaymentId = id;
-            return View();
+            var payment = _context.Payments.FirstOrDefault(u => u.Id == id);
+            if (payment == null)
+                return NotFound();
+
+            return View(payment);
         }
     }
 }

@@ -1,49 +1,39 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RealEase.API.Dtos;
-using RealEase.API.Requests;
-using RealEase.API.Responses;
-using RealEase.Infrastructure.Interfaces;
-using RealEase.Persistence.Context;
-using System.Net;
-using static RealEase.API.Requests.NewUserRequest;
-using User = RealEase.Domain.Entities.User;
-
-
+﻿using Microsoft.AspNetCore.Mvc;
+using RealEase.Application.Dtos.User;
+using RealEase.Application.Services;
+using RealEase.Domain.Entities;
 
 namespace RealEase.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly UserService _userService;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(UserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
-
 
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _userRepository.GetAllAsync();
+            var users = await _userService.GetAllUsersAsync(string.Empty);
             return Ok(users);
         }
 
-
         [HttpGet("GetUser/{id}")]
-        public async Task<ActionResult<User>> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
             if (user == null) return NotFound(new { message = "Usuario no encontrado." });
 
             var userResponse = new
             {
+                user.Id,
                 user.FirstName,
                 user.LastName,
                 user.Email,
@@ -55,71 +45,46 @@ namespace RealEase.API.Controllers
             return Ok(userResponse);
         }
 
-
-
-
         [HttpPost("AddUser")]
-        public async Task<ActionResult<NewUserResponse>> AddUser(NewUserRequest request)
+        public async Task<IActionResult> AddUser(UserDto request)
         {
-            var user = new User
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                PasswordHash = request.PasswordHash,
-                Role = request.Role,
-                IsActive = request.IsActive
-            };
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var newUser = await _userRepository.CreateAsync(user);
+            var userId = await _userService.AddUserAsync(request);
+            if (userId == 0)
+                return StatusCode(500, "No se pudo crear el usuario.");
 
-            return Ok(new NewUserResponse { Id = newUser.Id });
+            return Ok(new { Id = userId });
         }
-
-
 
         [HttpPut("UpdateUser/{id}")]
-        public async Task<ActionResult<NewUserResponse>> UpdateUser(int id, NewUserRequest request)
+        public async Task<IActionResult> UpdateUser(int id, UserDto request)
         {
-            if (id <= 0)
-                return BadRequest("El ID debe ser válido.");
+            if (id <= 0) return BadRequest("El ID debe ser válido.");
+            if (id != request.Id) return BadRequest("El ID de ruta y el ID del usuario no coinciden.");
 
-            var existingUser = await _userRepository.GetByIdAsync(id);
-            if (existingUser == null)
-                return NotFound("Usuario no encontrado.");
+            var existingUser = await _userService.GetUserByIdAsync(id);
+            if (existingUser == null) return NotFound("Usuario no encontrado.");
 
-            existingUser.FirstName = request.FirstName;
-            existingUser.LastName = request.LastName;
-            existingUser.Email = request.Email;
-            existingUser.PhoneNumber = request.PhoneNumber;
-            existingUser.PasswordHash = request.PasswordHash;
-            existingUser.Role = request.Role;
-            existingUser.IsActive = request.IsActive;
+            var updated = await _userService.UpdateUserAsync(request);
+            if (!updated) return StatusCode(500, "No se pudo actualizar el usuario.");
 
-            var updatedUser = await _userRepository.UpdateAsync(existingUser);
-
-            return Ok(new NewUserResponse { Id = updatedUser.Id });
+            return Ok(new { Id = id, message = "Usuario actualizado exitosamente." });
         }
 
-
-
-
-
         [HttpDelete("DeleteUser/{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             if (id <= 0) return BadRequest("El ID debe ser un número válido.");
 
-            var existingUser = await _userRepository.GetByIdAsync(id);
+            var existingUser = await _userService.GetUserByIdAsync(id);
             if (existingUser == null) return NotFound("Usuario no encontrado.");
 
-            var deleted = await _userRepository.DeleteAsync(id);
+            var deleted = await _userService.DeleteUserAsync(id);
             if (!deleted) return StatusCode(500, "No se pudo eliminar el usuario.");
 
             return Ok(new { message = "Usuario eliminado exitosamente." });
         }
-
-
     }
 }

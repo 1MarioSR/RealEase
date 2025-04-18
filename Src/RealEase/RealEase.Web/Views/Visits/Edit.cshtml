@@ -10,62 +10,65 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="editVisitForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" id="id" value="@Model.Id" />
+
+            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label for="propertyIdInput">PropertyId</label>
-                <input type="number" step="1" class="form-control" id="propertyIdInput" value="@Model.PropertyId" />
+                <label asp-for="PropertyId"></label>
+                <input type="number" step="1" class="form-control" id="propertyIdInput" name="propertyId" value="@Model.PropertyId" />
             </div>
 
             <div class="form-group">
-                <label for="userIdInput">UserId</label>
-                <input type="number" step="1" class="form-control" id="userIdInput" value="@Model.UserId" />
-            </div> 
-            <div class="form-group ">
-                <label for="visitDateInput">VisitDate</label>
-                <input type="date" class="form-control" id="visitDateInput" value="@Model.VisitDate.ToString("yyyy-MM-dd")" />
-            </div>
-            <div class="form-group ">
-                <label for="statusInput">Status</label>
-                <input class="form-control" id="statusInput" placeholder="Ej. Disponible" value="@Model.Status" />
+                <label asp-for="UserId"></label>
+                <input type="number" step="1" class="form-control" id="userIdInput" name="propertyId" value="@Model.UserId" />
             </div>
 
-            <div class="form-group ">
-                <label for="notesInput">Notes</label>
-                <input class="form-control" id="notesInput" value="@Model.Notes" />
+            <div class="form-group">
+                <label asp-for="VisitDate"></label>
+                <input type="date" class="form-control" id="visitDateInput" name="VisitDate" value="@Model.VisitDate.ToString("yyyy-MM-dd")"  />
             </div>
-          
+
+            <div class="form-group">
+                <label asp-for="Status"></label>
+                <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder=" Ej. Disponible" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Notes"></label>
+                <input class="form-control" id="notesInput" name="Notes" value="@Model.Notes"/>
+            </div>
+
             <button type="button" id="UpdateVisitButton" class="btn btn-primary">Save</button>
             <a href="/Visits" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>
 
-
-
 @section Scripts
 {
-
     <script>
         $(document).ready(function () {
             $('#UpdateVisitButton').click(function (e) {
                 e.preventDefault();
-                 var VisitId = $('#id').val();
-                // var url = window.location.pathname;
-                // var VisitId = url.substring(url.lastIndexOf('/') + 1);
-                //const VisitId = url.split('/').pop();
+                var visitId = $('input[name="Id"]').val();
+
+                console.log('Visit ID:', visitId);
+
                 var updatedVisit = {
+                    Id: visitId,
                     PropertyId: $('#propertyIdInput').val(),
                     UserId: $('#userIdInput').val(),
                     VisitDate: $('#visitDateInput').val(),
                     Status: $('#statusInput').val(),
                     Notes: $('#notesInput').val()
                     
+                    
                 };
 
                 $.ajax({
-                    url: 'https://localhost:7012/Visit/UpdateVisit/' + VisitId,
+                    url: 'https://localhost:7012/Visit/UpdateVisit/' + visitId,
                     type: 'PUT',
                     contentType: 'application/json',
                     data: JSON.stringify(updatedVisit),
@@ -75,12 +78,12 @@
                     },
                     error: function (error) {
                         console.log('Error:', error);
+                        alert('An error occurred while updating the visit.');
                     }
                 });
             });
         });
     </script>
-
-
 }
+
 

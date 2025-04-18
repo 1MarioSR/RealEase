@@ -1,16 +1,11 @@
-﻿using RealEase.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEase.Persistence.Context;
-using RealEase.Domain.Entities;
-
 
 namespace RealEase.Web.Controllers
 {
     public class PropertiesController : Controller
     {
         private readonly RealEaseDbContext _context;
-
 
         public PropertiesController(RealEaseDbContext context)
         {
@@ -19,13 +14,17 @@ namespace RealEase.Web.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
         public IActionResult Details(int id)
         {
-            ViewBag.PropertieId = id;
-            return View();
+            var propertie = _context.Properties.FirstOrDefault(u => u.Id == id);
+            if (propertie == null)
+                return NotFound();
+
+            return View(propertie);
         }
 
         [HttpGet]
@@ -34,16 +33,25 @@ namespace RealEase.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.PropertieId = id;
-            return View();
+            var propertie = _context.Properties.FirstOrDefault(u => u.Id == id);
+            if (propertie == null)
+                return NotFound();
+
+            return View(propertie);
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            ViewBag.PropertieId = id;
-            return View();
+            var propertie = _context.Properties.FirstOrDefault(u => u.Id == id);
+            if (propertie == null)
+                return NotFound();
+
+            return View(propertie);
         }
     }
 }
+    

@@ -10,61 +10,64 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="editContractForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" id="id" value="@Model.Id" />
+
+            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label for="clientIdInput">ClientId</label>
-                <input type="number" step="1" class="form-control" id="clientIdInput" value="@Model.ClientId" />
+                <label asp-for="ClientId"></label>
+                <input type="number" step="1" class="form-control" id="clientIdInput" name="ClientId" value="@Model.ClientId" />
             </div>
+
             <div class="form-group">
-                <label for="angentIdInput">AgentId</label>
-                <input type="number" step="1" class="form-control" id="agentIdInput" value="@Model.AgentId" />
-            </div> 
-            <div class="form-group ">
-                <label for="propertyIdInput">PropertyId</label>
-                <input type="number" step="1" class="form-control" id="propertyIdInput" value="@Model.PropertyId" />
-            </div>
-            <div class="form-group ">
-                <label for="startDateInput">StartDate</label>
-                <input class="form-control" type="date" id="startDateInput" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
-            </div>
-            <div class="form-group ">
-                <label for="endDateInput">EndDate</label>
-                <input class="form-control" type="date" id="endDateInput" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
-            </div>
-            <div class="form-group ">
-                <label for="monthlyAmountInput">MonthlyAmount</label>
-                <input class="form-control"  id="monthlyAmountInput" value="@Model.MonthlyAmount" />
+                <label asp-for="AgentId"></label>
+                <input type="number" step="1" class="form-control" id="agentIdInput" name="AgentId" value="@Model.AgentId" />
             </div>
 
-            <div class="form-group ">
-                <label for="statusInput">Status</label>
-                <input class="form-control" id="statusInput" placeholder="Ej. Disponible" value="@Model.Status" />
+            <div class="form-group">
+                <label asp-for="PropertyId"></label>
+                <input type="number" step="1" class="form-control" id="propertyIdInput" name="PropertyId" value="@Model.PropertyId" />
             </div>
 
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input type="date" class="form-control" id="startDateInput" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+            </div>
 
-          
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <input type="date" class="form-control" id="endDateInput" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MonthlyAmount"></label>
+                <input class="form-control" id="monthlyAmountInput" name="MonthlyAmount" value="@Model.MonthlyAmount" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status"></label>
+                <input class="form-control" id="statusInput" name="Status" value="@Model.Status" placeholder=" Ej. Disponible" />
+            </div>
+
             <button type="button" id="UpdateContractButton" class="btn btn-primary">Save</button>
             <a href="/Contracts" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>
 
-
-
 @section Scripts
 {
-
     <script>
         $(document).ready(function () {
             $('#UpdateContractButton').click(function (e) {
                 e.preventDefault();
-                 var ContractId = $('#id').val();
-                // var url = window.location.pathname;
-                // var ContractId = url.substring(url.lastIndexOf('/') + 1);
-                //const ContractId = url.split('/').pop();
+                var contractId = $('input[name="Id"]').val();
+
+                console.log('Contract ID:', contractId);
+
                 var updatedContract = {
+                    Id: contractId,
                     ClientId: $('#clientIdInput').val(),
                     AgentId: $('#agentIdInput').val(),
                     PropertyId: $('#propertyIdInput').val(),
@@ -72,11 +75,10 @@
                     EndDate: $('#endDateInput').val(),
                     MonthlyAmount: $('#monthlyAmountInput').val(),
                     Status: $('#statusInput').val()
-                    
                 };
 
                 $.ajax({
-                    url: 'https://localhost:7012/Contract/UpdateContract/' + ContractId,
+                    url: 'https://localhost:7012/Contract/UpdateContract/' + contractId,
                     type: 'PUT',
                     contentType: 'application/json',
                     data: JSON.stringify(updatedContract),
@@ -86,12 +88,10 @@
                     },
                     error: function (error) {
                         console.log('Error:', error);
+                        alert('An error occurred while updating the contract.');
                     }
                 });
             });
         });
     </script>
-
-
 }
-

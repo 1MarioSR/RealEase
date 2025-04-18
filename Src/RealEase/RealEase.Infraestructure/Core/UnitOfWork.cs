@@ -1,15 +1,16 @@
 ﻿using RealEase.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
+using RealEase.Persistence.Context;
 
 namespace RealEase.Infrastructure.Core
 {
     public class UnitOfWork
     {
-        private readonly DbContext _context;
+        private readonly RealEaseDbContext _context;
         private IDbContextTransaction _transaction;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(RealEaseDbContext context)
         {
             _context = context;
         }

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
 using RealEase.Persistence.Context;
 using RealEase.Infrastructure.Repositories;
 using RealEase.Infrastructure.Interfaces;
+using RealEase.Application.Services;
+using RealEase.Infrastructure.Core;
+using Umbraco.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,12 +32,18 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPropertieRepository, PropertieRepository>();
-builder.Services.AddScoped<IContractRepository, ContractRepository>();
-builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-builder.Services.AddScoped<IVisitRepository, VisitRepository>();
+builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<PropertieRepository>();
+builder.Services.AddScoped<ContractRepository>();
+builder.Services.AddScoped<PaymentRepository>();
+builder.Services.AddScoped<VisitRepository>();
 
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<PropertieService>();
+builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<VisitService>();
+builder.Services.AddScoped<ContractService>();
 
 var app = builder.Build();
 
