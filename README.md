@@ -25,10 +25,15 @@ RealEase is a comprehensive real estate management platform that simplifies the 
 
 1- Clone the repository:
   git clone https://github.com/1MarioSR/RealEase.git
+  
 2- Open the solution in Visual Studio.  
+
 3 - Restore the NuGet packages.
+
 4 - Configure the database connection string in appsettings.json.
+
 5 - dotnet ef database update
+
 6 - dotnet run
 
 ## API Documentation (Preview)
