@@ -31,6 +31,14 @@
     }
 </style>
 
+<div class="mb-4 mt-4">
+    <input type="date" id="filterVisitdate" placeholder="Fecha de Visita" class="form-control mb-2" />
+    <input type="number" id="filterPropertyid" placeholder="ID Propiedad" class="form-control mb-2" />
+    <input type="number" id="filterClientid" placeholder="ID Cliente" class="form-control mb-2" />
+    <input type="text" id="filterStatus" placeholder="Estado" class="form-control mb-2" />
+    <button id="btnFilter" class="btn btn-primary">Filtrar</button>
+</div>
+
 <h2 class="text-green mb-4">Visitas Agendadas</h2>
 
 <a class="btn btn-green mb-3" id="addVisitButton">📅 Agendar Visita</a>
@@ -64,7 +72,6 @@
 @section Scripts
 {
     <script>
-
         $(document).ready(function () {
             loadVisits();
 
@@ -99,6 +106,29 @@
                 window.location.href = 'https://localhost:7146/Visits/Details/' + VisitId;
             });
 
+            $('#btnFilter').click(function () {
+                var visitdate = $('#filterVisitdate').val();
+                var propertyid = $('#filterPropertyid').val();
+                var clientid = $('#filterClientid').val();
+                var status = $('#filterStatus').val();
+
+                $.ajax({
+                    url: 'https://localhost:7012/Visit/filter',
+                    type: 'GET',
+                    data: {
+                        visitdate: visitdate,
+                        propertyid: propertyid,
+                        clientid: clientid,
+                        status: status
+                    },
+                    success: function (data) {
+                        renderVisitTable(data);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
         });
 
         function loadVisits() {
@@ -106,29 +136,7 @@
                 url: 'https://localhost:7012/Visit/GetVisits',
                 type: 'GET',
                 success: function (data) {
-                    var tableBody = '';
-                    if (data.length === 0) {
-                        tableBody = '<tr><td colspan="7">No Records found</td></tr>';
-                    } else {
-                        $.each(data, function (index, Visit) {
-                            tableBody += '<tr>' +
-                                '<td>' + Visit.id + '</td>' +
-                                '<td>' + Visit.propertyId + '</td>' +
-                                '<td>' + Visit.userId + '</td>' +
-                                '<td>' + Visit.visitDate + '</td>' +
-                                '<td>' + Visit.status + '</td>' +
-                                '<td>' + Visit.notes +
-                                '<td>' +
-                                '<a class="btn btn-warning edit-Visit" data-id="' + Visit.id + '">Editar</a> ' +
-                                '<a class="btn btn-info view-Visit" data-id="' + Visit.id + '">Detalles</a> ' +
-                                '<button class="btn btn-danger delete-Visit" data-id="' + Visit.id + '">Eliminar</button>' +
-                                '</td>' +
-                                '</tr>';
-                        });
-                    }
-                    $('#VisitsTableBody').html(tableBody);
-                     
-
+                    renderVisitTable(data);
                 },
                 error: function (error) {
                     console.log('Error:', error);
@@ -136,6 +144,30 @@
             });
         }
 
-    </script>
+        function renderVisitTable(data) {
+            var tableBody = '';
 
+            if (data.length === 0) {
+                tableBody = '<tr><td colspan="7">No Records found</td></tr>';
+            } else {
+                $.each(data, function (index, Visit) {
+                    tableBody += '<tr>' +
+                        '<td>' + Visit.id + '</td>' +
+                        '<td>' + Visit.propertyId + '</td>' +
+                        '<td>' + Visit.userId + '</td>' +
+                        '<td>' + Visit.visitDate + '</td>' +
+                        '<td>' + Visit.status + '</td>' +
+                        '<td>' + Visit.notes + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-warning edit-Visit" data-id="' + Visit.id + '">Editar</a> ' +
+                        '<a class="btn btn-info view-Visit" data-id="' + Visit.id + '">Detalles</a> ' +
+                        '<button class="btn btn-danger delete-Visit" data-id="' + Visit.id + '">Eliminar</button>' +
+                        '</td>' +
+                        '</tr>';
+                });
+            }
+
+            $('#VisitsTableBody').html(tableBody);
+        }
+    </script>
 }

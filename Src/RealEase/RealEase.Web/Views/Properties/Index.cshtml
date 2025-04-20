@@ -31,6 +31,14 @@
     }
 </style>
 
+<div class="mb-4 mt-4">
+    <input type="text" id="filterCity" placeholder="Ciudad" class="form-control mb-2" />
+    <input type="text" id="filterPrice" placeholder="Precio" class="form-control mb-2" />
+    <input type="text" id="filterType" placeholder="Tipo De Propiedad" class="form-control mb-2" />
+    <input type="text" id="filterStatus" placeholder="Estado" class="form-control mb-2" />
+    <button id="btnFilter" class="btn btn-primary">Filtrar</button>
+</div>
+
 <h2 class="text-green mb-4">Propiedades Registradas</h2>
 
 <a class="btn btn-green mb-3" id="addPropertieButton">➕ Agregar Propiedad</a>
@@ -63,10 +71,8 @@
 </div>
 
 
-@section Scripts
-{
+@section Scripts {
     <script>
-
         $(document).ready(function () {
             loadProperties();
 
@@ -75,10 +81,11 @@
             });
 
             $(document).on('click', '.delete-Propertie', function () {
-                var PropertieId = $(this).data('id');
-                if (confirm('Are you sure you want to delete this Propertie?')) {
+                var propertieId = $(this).data('id');
+
+                if (confirm('Are you sure you want to delete this property?')) {
                     $.ajax({
-                        url: 'https://localhost:7012/Propertie/DeletePropertie/' + PropertieId,
+                        url: 'https://localhost:7012/Propertie/DeletePropertie/' + propertieId,
                         type: 'DELETE',
                         success: function () {
                             alert('Propertie deleted successfully');
@@ -92,15 +99,38 @@
             });
 
             $(document).on('click', '.edit-Propertie', function () {
-                var PropertieId = $(this).data('id');
-                window.location.href = 'https://localhost:7146/Properties/Edit/' + PropertieId;
+                var propertieId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Properties/Edit/' + propertieId;
             });
 
             $(document).on('click', '.view-Propertie', function () {
-                var PropertieId = $(this).data('id');
-                window.location.href = 'https://localhost:7146/Properties/Details/' + PropertieId;
+                var propertieId = $(this).data('id');
+                window.location.href = 'https://localhost:7146/Properties/Details/' + propertieId;
             });
 
+            $('#btnFilter').click(function () {
+                var city = $('#filterCity').val();
+                var price = $('#filterPrice').val();
+                var type = $('#filterType').val();
+                var status = $('#filterStatus').val();
+
+                $.ajax({
+                    url: 'https://localhost:7012/Propertie/filter',
+                    type: 'GET',
+                    data: {
+                        city: city,
+                        price: price,
+                        type: type,
+                        status: status
+                    },
+                    success: function (data) {
+                        renderPropertieTable(data);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
         });
 
         function loadProperties() {
@@ -108,32 +138,7 @@
                 url: 'https://localhost:7012/Propertie/GetProperties',
                 type: 'GET',
                 success: function (data) {
-                    var tableBody = '';
-                    if (data.length === 0) {
-                        tableBody = '<tr><td colspan="10">No Records found</td></tr>';
-                    } else {
-                        $.each(data, function (index, Propertie) {
-                            tableBody += '<tr>' +
-                                '<td>' + Propertie.id + '</td>' +
-                                '<td>' + Propertie.title + '</td>' +
-                                '<td><img src="' + Propertie.image + '" alt="Property Image" width="100"></td>'+
-                                '<td>' + Propertie.description + '</td>' +
-                                '<td>' + Propertie.address + '</td>' +
-                                '<td>' + Propertie.price + '</td>' +
-                                '<td>' + Propertie.propertyType + '</td>' +
-                                '<td>' + Propertie.status + '</td>' +
-                                '<td>' + Propertie.ownerId +
-                                '<td>' +
-                                '<a class="btn btn-warning edit-Propertie" data-id="' + Propertie.id + '">Editar</a> ' +
-                                '<a class="btn btn-info view-Propertie" data-id="' + Propertie.id + '">Detalles</a>' +
-                                '<button class="btn btn-danger delete-Propertie" data-id="' + Propertie.id + '">Eliminar</button>' +
-                                '</td>' +
-                                '</tr>';
-                        });
-                    }
-                    $('#PropertiesTableBody').html(tableBody);
-                     
-
+                    renderPropertieTable(data);
                 },
                 error: function (error) {
                     console.log('Error:', error);
@@ -141,6 +146,33 @@
             });
         }
 
-    </script>
+        function renderPropertieTable(data) {
+            var tableBody = '';
 
+            if (data.length === 0) {
+                tableBody = '<tr><td colspan="10">No records found</td></tr>';
+            } else {
+                $.each(data, function (index, propertie) {
+                    tableBody += '<tr>' +
+                        '<td>' + propertie.id + '</td>' +
+                        '<td>' + propertie.title + '</td>' +
+                        '<td><img src="' + propertie.image + '" alt="Property Image" width="100"></td>' +
+                        '<td>' + propertie.description + '</td>' +
+                        '<td>' + propertie.address + '</td>' +
+                        '<td>' + propertie.price + '</td>' +
+                        '<td>' + propertie.propertyType + '</td>' +
+                        '<td>' + propertie.status + '</td>' +
+                        '<td>' + propertie.ownerId + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-warning edit-Propertie" data-id="' + propertie.id + '">Editar</a> ' +
+                        '<a class="btn btn-info view-Propertie" data-id="' + propertie.id + '">Detalles</a> ' +
+                        '<button class="btn btn-danger delete-Propertie" data-id="' + propertie.id + '">Eliminar</button>' +
+                        '</td>' +
+                        '</tr>';
+                });
+            }
+
+            $('#PropertiesTableBody').html(tableBody);
+        }
+    </script>
 }

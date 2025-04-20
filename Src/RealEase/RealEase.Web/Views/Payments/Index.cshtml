@@ -31,6 +31,13 @@
     }
 </style>
 
+<div class="mb-4 mt-4">
+    <input type="number" id="filterContractid" placeholder="ID Contrato" class="form-control mb-2" />
+    <input type="number" id="filterClientid" placeholder="ID Inquilino" class="form-control mb-2" />
+    <input type="date" id="filterPaymentdate" placeholder="Fecha de Pago" class="form-control mb-2" />
+    <button id="btnFilter" class="btn btn-primary">Filtrar</button>
+</div>
+
 <h2 class="text-green mb-4">Pagos Registrados</h2>
 
 <a class="btn btn-green mb-3" id="addPaymentButton">💳 Añadir Pago</a>
@@ -62,10 +69,8 @@
 
 
 
-@section Scripts
-{
+@section Scripts {
     <script>
-
         $(document).ready(function () {
             loadPayments();
 
@@ -100,6 +105,27 @@
                 window.location.href = 'https://localhost:7146/Payments/Details/' + PaymentId;
             });
 
+            $('#btnFilter').click(function () {
+                var contractid = $('#filterContractid').val();
+                var clientid = $('#filterClientid').val();
+                var paymentdate = $('#filterPaymentdate').val();
+
+                $.ajax({
+                    url: 'https://localhost:7012/Payment/filter',
+                    type: 'GET',
+                    data: {
+                        contractid: contractid,
+                        clientid: clientid,
+                        paymentdate: paymentdate
+                    },
+                    success: function (data) {
+                        renderPaymentTable(data);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
         });
 
         function loadPayments() {
@@ -107,30 +133,7 @@
                 url: 'https://localhost:7012/Payment/GetPayments',
                 type: 'GET',
                 success: function (data) {
-                    var tableBody = '';
-                    if (data.length === 0) {
-                        tableBody = '<tr><td colspan="8">No Records found</td></tr>';
-                    } else {
-                        $.each(data, function (index, Payment) {
-                            tableBody += '<tr>' +
-                                '<td>' + Payment.id + '</td>' +
-                                '<td>' + Payment.contractId + '</td>' +
-                                '<td>' + Payment.tenantId + '</td>' +
-                                '<td>' + Payment.paymentDate + '</td>' +
-                                '<td>' + Payment.amount + '</td>' +
-                                '<td>' + Payment.paymentMethod + '</td>' +
-                                '<td>' + Payment.status +
-                                '<td>' +
-                                '<a class="btn btn-warning edit-Payment" data-id="' + Payment.id + '">Editar</a> ' +
-                                '<a class="btn btn-info view-Payment" data-id="' + Payment.id + '">Detalles</a> ' +
-                                '<button class="btn btn-danger delete-Payment" data-id="' + Payment.id + '">Eliminar</button>' +
-                                '</td>' +
-                                '</tr>';
-                        });
-                    }
-                    $('#PaymentsTableBody').html(tableBody);
-
-
+                    renderPaymentTable(data);
                 },
                 error: function (error) {
                     console.log('Error:', error);
@@ -138,6 +141,32 @@
             });
         }
 
-    </script>
+        function renderPaymentTable(data) {
+            var tableBody = '';
 
+            if (data.length === 0) {
+                tableBody = '<tr><td colspan="8">No records found</td></tr>';
+            } else {
+                $.each(data, function (index, Payment) {
+                    tableBody += '<tr>' +
+                        '<td>' + Payment.id + '</td>' +
+                        '<td>' + Payment.contractId + '</td>' +
+                        '<td>' + Payment.tenantId + '</td>' +
+                        '<td>' + Payment.paymentDate + '</td>' +
+                        '<td>' + Payment.amount + '</td>' +
+                        '<td>' + Payment.paymentMethod + '</td>' +
+                        '<td>' + Payment.status + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-warning edit-Payment" data-id="' + Payment.id + '">Editar</a> ' +
+                        '<a class="btn btn-info view-Payment" data-id="' + Payment.id + '">Detalles</a> ' +
+                        '<button class="btn btn-danger delete-Payment" data-id="' + Payment.id + '">Eliminar</button>' +
+                        '</td>' +
+                        '</tr>';
+                });
+            }
+
+            $('#PaymentsTableBody').html(tableBody);
+        }
+    </script>
 }
+

@@ -86,9 +86,9 @@ namespace RealEase.API.Controllers
         }
         
         [HttpGet("filter")]
-        public async Task<IActionResult> GetFilteredVisits([FromQuery] DateTime? startdate, [FromQuery] int? propertyid, [FromQuery] int? clientid, [FromQuery] string? status)
+        public async Task<IActionResult> GetFilteredVisits([FromQuery] DateTime? visitdate, [FromQuery] int? propertyid, [FromQuery] int? clientid, [FromQuery] string? status)
         {
-            var visits = await _visitService.GetFilteredVisitsAsync(startdate, propertyid, clientid, status);
+            var visits = await _visitService.GetFilteredVisitsAsync(visitdate, propertyid, clientid, status);
             return Ok(visits);
         }
     }

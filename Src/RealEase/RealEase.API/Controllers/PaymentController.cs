@@ -88,9 +88,9 @@ namespace RealEase.API.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<IActionResult> GetFilteredPayments([FromQuery] DateTime? paymentdate, [FromQuery] int? propertyid, [FromQuery] int? clientid)
+        public async Task<IActionResult> GetFilteredPayments([FromQuery] DateTime? paymentdate, [FromQuery] int? contractid, [FromQuery] int? clientid)
         {
-            var payments = await _paymentService.GetFilteredPaymentsAsync(paymentdate, propertyid, clientid);
+            var payments = await _paymentService.GetFilteredPaymentsAsync(paymentdate, contractid, clientid);
             return Ok(payments);
         }
 

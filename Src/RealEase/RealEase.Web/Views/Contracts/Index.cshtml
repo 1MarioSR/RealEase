@@ -31,6 +31,13 @@
     }
 </style>
 
+<div class="mb-4 mt-4">
+    <input type="date" id="filterStartdate" placeholder="Fecha de Inicio" class="form-control mb-2" />
+    <input type="number" id="filterPropertyid" placeholder="ID Propiedad" class="form-control mb-2" />
+    <input type="text" id="filterStatus" placeholder="Estado" class="form-control mb-2" />
+    <button id="btnFilter" class="btn btn-primary">Filtrar</button>
+</div>
+
 <h2 class="text-green mb-4">Contratos Activos</h2>
 
 <a class="btn btn-green mb-3" id="addContractButton">📄 Añadir Contrato</a>
@@ -66,7 +73,6 @@
 @section Scripts
 {
     <script>
-
         $(document).ready(function () {
             loadContracts();
 
@@ -101,6 +107,27 @@
                 window.location.href = 'https://localhost:7146/Contracts/Details/' + ContractId;
             });
 
+            $('#btnFilter').click(function () {
+                var startdate = $('#filterStartdate').val();
+                var propertyid = $('#filterPropertyid').val();
+                var status = $('#filterStatus').val();
+
+                $.ajax({
+                    url: 'https://localhost:7012/Contract/filter',
+                    type: 'GET',
+                    data: {
+                        startdate: startdate,
+                        propertyid: propertyid,
+                        status: status
+                    },
+                    success: function (data) {
+                        renderContractTable(data);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
         });
 
         function loadContracts() {
@@ -108,31 +135,7 @@
                 url: 'https://localhost:7012/Contract/GetContracts',
                 type: 'GET',
                 success: function (data) {
-                    var tableBody = '';
-                    if (data.length === 0) {
-                        tableBody = '<tr><td colspan="9">No Records found</td></tr>';
-                    } else {
-                        $.each(data, function (index, Contract) {
-                            tableBody += '<tr>' +
-                                '<td>' + Contract.id + '</td>' +
-                                '<td>' + Contract.clientId + '</td>' +
-                                '<td>' + Contract.agentId + '</td>' +
-                                '<td>' + Contract.propertyId + '</td>' +
-                                '<td>' + Contract.startDate + '</td>' +
-                                '<td>' + Contract.endDate + '</td>' +
-                                '<td>' + Contract.monthlyAmount + '</td>' +
-                                '<td>' + Contract.status +
-                                '<td>' +
-                                '<a class="btn btn-warning edit-Contract" data-id="' + Contract.id + '">Editar</a> ' +
-                                '<a class="btn btn-info view-Contract" data-id="' + Contract.id + '">Detalles</a> ' +
-                                '<button class="btn btn-danger delete-Contract" data-id="' + Contract.id + '">Eliminar</button>' +
-                                '</td>' +
-                                '</tr>';
-                        });
-                    }
-                    $('#ContractsTableBody').html(tableBody);
-                     
-
+                    renderContractTable(data);
                 },
                 error: function (error) {
                     console.log('Error:', error);
@@ -140,6 +143,32 @@
             });
         }
 
-    </script>
+        function renderContractTable(data) {
+            var tableBody = '';
 
+            if (data.length === 0) {
+                tableBody = '<tr><td colspan="9">No Records found</td></tr>';
+            } else {
+                $.each(data, function (index, Contract) {
+                    tableBody += '<tr>' +
+                        '<td>' + Contract.id + '</td>' +
+                        '<td>' + Contract.clientId + '</td>' +
+                        '<td>' + Contract.agentId + '</td>' +
+                        '<td>' + Contract.propertyId + '</td>' +
+                        '<td>' + Contract.startDate + '</td>' +
+                        '<td>' + Contract.endDate + '</td>' +
+                        '<td>' + Contract.monthlyAmount + '</td>' +
+                        '<td>' + Contract.status + '</td>' +
+                        '<td>' +
+                        '<a class="btn btn-warning edit-Contract" data-id="' + Contract.id + '">Editar</a> ' +
+                        '<a class="btn btn-info view-Contract" data-id="' + Contract.id + '">Detalles</a> ' +
+                        '<button class="btn btn-danger delete-Contract" data-id="' + Contract.id + '">Eliminar</button>' +
+                        '</td>' +
+                        '</tr>';
+                });
+            }
+
+            $('#ContractsTableBody').html(tableBody);
+        }
+    </script>
 }
