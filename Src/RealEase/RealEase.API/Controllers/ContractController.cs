@@ -86,5 +86,12 @@ namespace RealEase.API.Controllers
             
             return Ok(new { message = "Contrato eliminado exitosamente." });
         }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilteredContracts([FromQuery] DateTime? startdate, [FromQuery] int? contractid, [FromQuery] string? status)
+        {
+            var payments = await _contractService.GetFilteredContractsAsync(startdate, contractid, status);
+            return Ok(payments);
+        }
     }
 }

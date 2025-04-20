@@ -45,23 +45,22 @@ public class ContractRepository : BaseRepository<Contract>, IContractRepository
         return true;
     }
 
-    public async Task<List<Contract>> GetContractsByClientIdAsync(int clientId)
+    public async Task<List<Contract>> GetFilteredContractsAsync(DateTime? startdate, int? propertyid, string? status)
     {
-        return await _dbSet.Where(c => c.ClientId == clientId).ToListAsync();
+        var query = _context.Contracts.AsQueryable();
+
+        if (startdate.HasValue)
+            query = query.Where(u => u.StartDate.Date == startdate.Value.Date);
+
+        if (propertyid.HasValue)
+            query = query.Where(u => u.PropertyId == propertyid.Value);
+
+        if (!string.IsNullOrEmpty(status))
+            query = query.Where(u => u.Status == status);
+
+        return await query.ToListAsync();
     }
 
-    public async Task<List<Contract>> GetContractsByAgentIdAsync(int agentId)
-    {
-        return await _dbSet.Where(c => c.AgentId == agentId).ToListAsync();
-    }
-
-    public async Task<List<Contract>> GetContractsByStatusAsync(string status)
-    {
-        return await _dbSet.Where(c => c.Status == status).ToListAsync();
-    }
-
-    public async Task<List<Contract>> GetActiveContractsAsync()
-    {
-        return await _dbSet.Where(c => c.Status == "Activo").ToListAsync();
-    }
 }
+
+    

@@ -1,6 +1,8 @@
 ﻿using RealEase.Infrastructure.Core;
 using RealEase.Application.Dtos.Contract;
 using RealEase.Domain.Entities;
+using RealEase.Application.Dtos.Payment;
+using RealEase.Infrastructure.Interfaces;
 
 namespace RealEase.Application.Services
 {
@@ -146,6 +148,22 @@ namespace RealEase.Application.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 return false;
             }
+        }
+        public async Task<List<ContractDto>> GetFilteredContractsAsync(DateTime? startdate, int? propertyid, string? status)
+        {
+            var contracts = await _contractRepository.GetFilteredContractsAsync(startdate, propertyid, status);
+
+            return contracts.Select(u => new ContractDto
+            {
+                Id = u.Id,
+                ClientId = u.ClientId,
+                AgentId = u.AgentId,
+                PropertyId = u.PropertyId,
+                StartDate = u.StartDate,
+                EndDate = u.EndDate,
+                MonthlyAmount = u.MonthlyAmount,
+                Status = u.Status
+            }).ToList();
         }
     }
 }

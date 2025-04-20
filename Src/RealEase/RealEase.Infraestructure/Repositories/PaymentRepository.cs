@@ -44,19 +44,22 @@ public class PaymentRepository : BaseRepository<Payment>, IPaymentRepository
         await _context.SaveChangesAsync();
         return true;
     }
-
-    public async Task<List<Payment>> GetPaymentsByTenantIdAsync(int tenantId)
+    public async Task<List<Payment>> GetFilteredPaymentsAsync(DateTime? paymentdate, int? contractid, int? clientid)
     {
-        return await _dbSet.Where(p => p.TenantId == tenantId).ToListAsync();
+        var query = _context.Payments.AsQueryable();
+
+        if (paymentdate.HasValue)
+            query = query.Where(u => u.PaymentDate.Date == paymentdate.Value.Date);
+
+        if (contractid.HasValue)
+            query = query.Where(u => u.ContractId == contractid.Value);
+
+        if (clientid.HasValue)
+            query = query.Where(u => u.TenantId == clientid.Value);
+
+        return await query.ToListAsync();
     }
 
-    public async Task<List<Payment>> GetPaymentsByContractIdAsync(int contractId)
-    {
-        return await _dbSet.Where(p => p.ContractId == contractId).ToListAsync();
-    }
-
-    public async Task<List<Payment>> GetPaymentsByStatusAsync(string status)
-    {
-        return await _dbSet.Where(p => p.Status == status).ToListAsync();
-    }
 }
+
+    

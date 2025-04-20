@@ -9,9 +9,5 @@ namespace RealEase.Infrastructure.Interfaces
         Task<Contract> CreateAsync(Contract contract);
         Task<Contract> UpdateAsync(Contract contract);
         Task<bool> DeleteAsync(int id);
-        Task<List<Contract>> GetContractsByClientIdAsync(int clientId);
-        Task<List<Contract>> GetContractsByAgentIdAsync(int agentId);
-        Task<List<Contract>> GetContractsByStatusAsync(string status);
-        Task<List<Contract>> GetActiveContractsAsync();
     }
 }

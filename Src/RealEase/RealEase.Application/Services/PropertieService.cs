@@ -1,4 +1,5 @@
 ﻿using RealEase.Application.Dtos.Propertie;
+using RealEase.Application.Dtos.User;
 using RealEase.Domain.Entities;
 using RealEase.Infrastructure.Core;
 
@@ -146,6 +147,24 @@ namespace RealEase.Application.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 return false;
             }
+        }
+
+        public async Task<List<PropertieDto>> GetFilteredPropertiesAsync(string? city, decimal? price, string? type, string? status)
+        {
+            var properties = await _propertieRepository.GetFilteredPropertiesAsync(city, price, type, status);
+
+            return properties.Select(u => new PropertieDto
+            {
+                Id = u.Id,
+                Title = u.Title,
+                Image = u.Image,
+                Description = u.Description,
+                Address = u.Address,
+                Price = u.Price,
+                PropertyType = u.PropertyType,
+                Status = u.Status,
+                OwnerId = u.OwnerId
+            }).ToList();
         }
     }
 }

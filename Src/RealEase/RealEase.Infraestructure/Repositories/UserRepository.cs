@@ -67,5 +67,22 @@ namespace RealEase.Infrastructure.Repositories
         {
             return await _dbSet.Where(u => u.IsActive).ToListAsync();
         }
+        public async Task<List<User>> GetFilteredUsersAsync(string? name, string? role, bool? isActive)
+        {
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(u => u.FirstName.Contains(name) || u.LastName.Contains(name));
+
+            if (!string.IsNullOrEmpty(role))
+                query = query.Where(u => u.Role == role);
+            
+            if (isActive.HasValue)
+            {
+                query = query.Where(u => u.IsActive == isActive.Value);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

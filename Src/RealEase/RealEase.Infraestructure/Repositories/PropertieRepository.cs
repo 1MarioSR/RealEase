@@ -44,18 +44,33 @@ public class PropertieRepository : BaseRepository<Propertie>, IPropertieReposito
         return true;
     }
 
-    public async Task<List<Propertie>> GetPropertiesByOwnerIdAsync(int ownerId)
+    public async Task<List<Propertie>> GetFilteredPropertiesAsync(string? city, decimal? price, string? type, string? status)
     {
-        return await _dbSet.Where(p => p.OwnerId == ownerId).ToListAsync();
+        var query = _context.Properties.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(city))
+        {
+            query = query.Where(u => u.Address.Contains(city));
+        }
+
+        if (price.HasValue)
+        {
+            query = query.Where(u => u.Price == price.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(type))
+        {
+            query = query.Where(u => u.PropertyType.Contains(type));
+        }
+
+        if (!string.IsNullOrWhiteSpace(status))
+        {
+            query = query.Where(u => u.Status.Contains(status));
+        }
+
+        return await query.ToListAsync();
     }
 
-    public async Task<List<Propertie>> GetPropertiesByStatusAsync(string status)
-    {
-        return await _dbSet.Where(p => p.Status == status).ToListAsync();
-    }
-
-    public async Task<List<Propertie>> GetPropertiesByTypeAsync(string propertyType)
-    {
-        return await _dbSet.Where(p => p.PropertyType == propertyType).ToListAsync();
-    }
 }
+       
+

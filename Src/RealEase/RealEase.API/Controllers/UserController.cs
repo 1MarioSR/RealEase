@@ -85,5 +85,13 @@ namespace RealEase.API.Controllers
 
             return Ok(new { message = "Usuario eliminado exitosamente." });
         }
+        
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilteredUsers([FromQuery] string? name, [FromQuery] string? role, [FromQuery] bool? isActive)
+        {
+            var users = await _userService.GetFilteredUsersAsync(name, role, isActive);
+            return Ok(users);
+        }
+
     }
 }

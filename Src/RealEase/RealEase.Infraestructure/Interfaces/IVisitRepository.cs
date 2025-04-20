@@ -9,8 +9,5 @@ namespace RealEase.Infrastructure.Interfaces
         Task<Visit> CreateAsync(Visit visit);
         Task<Visit> UpdateAsync(Visit visit);
         Task<bool> DeleteAsync(int id);
-        Task<List<Visit>> GetVisitsByPropertyIdAsync(int propertyId);
-        Task<List<Visit>> GetVisitsByUserIdAsync(int userId);
-        Task<List<Visit>> GetUpcomingVisitsAsync();
     }
 }

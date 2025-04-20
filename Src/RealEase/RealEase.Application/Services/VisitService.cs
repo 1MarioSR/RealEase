@@ -2,6 +2,8 @@
 using RealEase.Infrastructure.Repositories;
 using RealEase.Application.Dtos.Visit;
 using RealEase.Domain.Entities;
+using RealEase.Application.Dtos.Payment;
+using RealEase.Infrastructure.Interfaces;
 
 namespace RealEase.Application.Services
 {
@@ -142,6 +144,20 @@ namespace RealEase.Application.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 return false;
             }
+        }
+        public async Task<List<VisitDto>> GetFilteredVisitsAsync(DateTime? visitdate, int? propertyid, int? clientid, string? status)
+        {
+            var visits = await _visitRepository.GetFilteredVisitsAsync(visitdate, propertyid, clientid, status);
+
+            return visits.Select(u => new VisitDto
+            {
+                Id = u.Id,
+                PropertyId = u.PropertyId,
+                UserId = u.UserId,
+                VisitDate = u.VisitDate,
+                Status = u.Status,
+                Notes = u.Notes
+            }).ToList();
         }
     }
 }

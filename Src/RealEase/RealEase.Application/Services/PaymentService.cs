@@ -1,6 +1,8 @@
 ﻿using RealEase.Application.Dtos.Payment;
+using RealEase.Application.Dtos.Propertie;
 using RealEase.Domain.Entities;
 using RealEase.Infrastructure.Core;
+using RealEase.Infrastructure.Interfaces;
 
 
 namespace RealEase.Application.Services
@@ -144,6 +146,21 @@ namespace RealEase.Application.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 return false;
             }
+        }
+        public async Task<List<PaymentDto>> GetFilteredPaymentsAsync(DateTime? paymentdate, int? contractid, int? clientid)
+        {
+            var payments = await _paymentRepository.GetFilteredPaymentsAsync(paymentdate, contractid, clientid);
+
+            return payments.Select(u => new PaymentDto
+            {
+                Id = u.Id,
+                ContractId = u.ContractId,
+                TenantId = u.TenantId,
+                PaymentDate = u.PaymentDate,
+                Amount = u.Amount,
+                PaymentMethod = u.PaymentMethod,
+                Status = u.Status
+            }).ToList();
         }
     }
 }

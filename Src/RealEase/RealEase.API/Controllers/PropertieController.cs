@@ -88,5 +88,12 @@ namespace RealEase.API.Controllers
 
             return Ok(new { message = "Propiedad eliminada exitosamente." });
         }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilteredProperties([FromQuery] string? city, [FromQuery] decimal? price, [FromQuery] string? type, [FromQuery] string? status)
+        {
+            var properties = await _propertieService.GetFilteredPropertiesAsync(city, price, type, status);
+            return Ok(properties);
+        }
     }
 }

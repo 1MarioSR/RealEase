@@ -9,8 +9,5 @@ namespace RealEase.Infrastructure.Interfaces
         Task<Propertie> CreateAsync(Propertie propertie);
         Task<Propertie> UpdateAsync(Propertie propertie);
         Task<bool> DeleteAsync(int id);
-        Task<List<Propertie>> GetPropertiesByOwnerIdAsync(int ownerId);
-        Task<List<Propertie>> GetPropertiesByStatusAsync(string status);
-        Task<List<Propertie>> GetPropertiesByTypeAsync(string propertyType);
     }
 }

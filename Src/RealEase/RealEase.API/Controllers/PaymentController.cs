@@ -86,5 +86,13 @@ namespace RealEase.API.Controllers
 
             return Ok(new { message = "Pago eliminado exitosamente." });
         }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilteredPayments([FromQuery] DateTime? paymentdate, [FromQuery] int? propertyid, [FromQuery] int? clientid)
+        {
+            var payments = await _paymentService.GetFilteredPaymentsAsync(paymentdate, propertyid, clientid);
+            return Ok(payments);
+        }
+
     }
 }

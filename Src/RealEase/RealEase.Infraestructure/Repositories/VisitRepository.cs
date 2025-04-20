@@ -51,19 +51,27 @@ namespace RealEase.Infrastructure.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<List<Visit>> GetVisitsByPropertyIdAsync(int propertyId)
+        public async Task<List<Visit>> GetFilteredVisitsAsync(DateTime? visitdate, int? propertyid, int? clientid, string? status)
         {
-            return await _dbSet.Where(v => v.PropertyId == propertyId).ToListAsync();
+            var query = _context.Visits.AsQueryable();
+
+            if (visitdate.HasValue)
+                query = query.Where(u => u.VisitDate.Date == visitdate.Value.Date);
+
+            if (propertyid.HasValue)
+                query = query.Where(u => u.PropertyId == propertyid.Value);
+
+            if (clientid.HasValue)
+                query = query.Where(u => u.UserId == clientid.Value);
+
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(u => u.Status == status);
+
+            return await query.ToListAsync();
         }
 
-        public async Task<List<Visit>> GetVisitsByUserIdAsync(int userId)
-        {
-            return await _dbSet.Where(v => v.UserId == userId).ToListAsync();
-        }
 
-        public async Task<List<Visit>> GetUpcomingVisitsAsync()
-        {
-            return await _dbSet.Where(v => v.VisitDate >= DateTime.UtcNow).ToListAsync();
-        }
     }
 }
+       
+

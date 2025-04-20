@@ -84,5 +84,12 @@ namespace RealEase.API.Controllers
 
             return Ok(new { message = "Visita eliminada exitosamente." });
         }
+        
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilteredVisits([FromQuery] DateTime? startdate, [FromQuery] int? propertyid, [FromQuery] int? clientid, [FromQuery] string? status)
+        {
+            var visits = await _visitService.GetFilteredVisitsAsync(startdate, propertyid, clientid, status);
+            return Ok(visits);
+        }
     }
 }

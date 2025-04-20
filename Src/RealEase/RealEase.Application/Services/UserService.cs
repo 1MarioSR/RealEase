@@ -143,6 +143,21 @@ namespace RealEase.Application.Services
                 return false;
             }
         }
+        public async Task<List<UserDto>> GetFilteredUsersAsync(string? name, string? role, bool? isActive)
+        {
+            var users = await _userRepository.GetFilteredUsersAsync(name, role, isActive);
 
+            return users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                PasswordHash = u.PasswordHash,
+                Role = u.Role,
+                IsActive = u.IsActive
+            }).ToList();
+        }
     }
 }
