@@ -11,6 +11,8 @@ RealEase is a comprehensive real estate management platform that simplifies the 
 
 ### Rent Payments: Manages rental payments and keeps track of all transactions.
 
+### filters: The filter allows users to search and retrieve specific user data based on provided criteria, such as name or role, helping to quickly find relevant records.
+
 ## Tech Stack
 
 ### Language: C#
@@ -42,20 +44,23 @@ The API follows RESTful principles and uses DTOs (Data Transfer Objects) for com
 
 ## Endpoints
 
-GET /api/properties
-Returns a list of all properties.
+GET /api/users
+Returns a list of all user.
 
-GET /api/properties/{id}
-Returns the details of a specific property.
+GET /api/users/{id}
+Returns the details of a specific user.
 
-POST /api/properties
-Creates a new property.
+POST /api/users
+Creates a new user.
 
-PUT /api/properties/{id}
-Updates a property listing.
+PUT /api/users/{id}
+Updates a user listing.
 
-DELETE /api/properties/{id}
-Deletes a property.
+DELETE /api/users/{id}
+Deletes a user.
+
+GET /api/users/filter
+filters for fields
 
 ## Contributing
 
@@ -71,17 +76,17 @@ Contributions are welcome! If you’d like to help improve RealEase, please:
 
 ## Screenshot
 
-![image](https://github.com/user-attachments/assets/b6cca112-6692-4791-bd51-164ddba78f77)
+![image](https://github.com/user-attachments/assets/b8fedc59-cffd-47bd-b28e-b1a69bf0dc12)
 
-![image](https://github.com/user-attachments/assets/20a6efb6-548b-49b1-aed7-4c9b2a3ae867)
+![image](https://github.com/user-attachments/assets/1c558658-4700-4c72-9f7c-bc225c8a1cbe)
 
-![image](https://github.com/user-attachments/assets/bb7b9e32-8792-46c0-871a-eb4c64d0a2ce)
+![image](https://github.com/user-attachments/assets/009621ca-894c-4414-b1dd-a30285acafa0)
 
-![image](https://github.com/user-attachments/assets/eb578e4e-3081-4cb1-a679-39932758f2c4)
+![image](https://github.com/user-attachments/assets/151a192d-d7c2-4bba-9ee6-dc6b100a6958)
 
-![image](https://github.com/user-attachments/assets/d525c54e-533b-4979-8790-03c48733694f)
+![image](https://github.com/user-attachments/assets/ac52ace9-8561-459c-bb7a-2939aaf3e730)
 
-![image](https://github.com/user-attachments/assets/3f5e3129-2018-40d2-992d-a5df205018ca)
+
 
 
 ## License
